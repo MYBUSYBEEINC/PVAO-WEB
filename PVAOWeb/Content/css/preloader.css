@@ -1,0 +1,27 @@
+﻿#page-loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #e3e3e3; /* change if the mask should have another color then white */
+    z-index: 99999; /* makes sure it stays on top */
+}
+
+#loader-logo {
+    width: 300px;
+    height: 300px;
+    position: absolute;
+    left: 40%; /* centers the loading animation horizontally one the screen */
+    top: 25%; /* centers the loading animation vertically one the screen */
+    background-image: url(../images/dog_1.gif);
+    z-index: 9999; /* path to your loading animation */
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    margin: -10px 0 0 -36px; /* is width and height divided by two */
+}
+
+.hide-preloader {
+    display: none;
+}

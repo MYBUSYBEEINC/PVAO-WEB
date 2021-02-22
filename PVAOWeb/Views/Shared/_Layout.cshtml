@@ -1,0 +1,135 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <!-- Metas -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Philippine Veterans Affairs Office" />
+    <!-- Links -->
+    <link rel="icon" type="image/png" href="#" />
+    <title>Philippine Veterans Affairs Office (PVAO) | Web Portal</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <!-- google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" crossorigin="anonymous"></script>
+    <link href="~/Content/css/preloader.css" rel="stylesheet" />
+
+    @Styles.Render("~/Content/css")
+
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <!--Preloader starts-->
+    @*<div class="preloader js-preloader">
+        <img src="~/Content/images/preloader.gif" alt="...">
+    </div>*@
+    <div id="page-loader">
+        <div id="loader-logo"></div>
+    </div>
+    <div id="page-wrapper" class="page-wrapper" data-get-audit-logs-url="@Url.Action("GetAuditLogs", "AuditLog")" data-get-roles-url="@Url.Action("GetRoles", "Role")" data-get-pages-url="@Url.Action("GetPages", "Page")" data-get-users-url="@Url.Action("GetUsers", "User")" data-logout-user-url="@Url.Action("Logout", "Account")" 
+         data-get-current-user-url="@Url.Action("GetCurrentUser", "Account")" data-get-settings-url="@Url.Action("GetSettings", "Settings")" data-save-settings-url="@Url.Action("SaveChanges", "Settings")" data-save-audit-log-url="@Url.Action("SaveAuditLog", "AuditLog")" data-get-role-url="@Url.Action("GetRole", "Role")" 
+         data-save-role-url="@Url.Action("SaveChanges", "Role")" data-get-page-url="@Url.Action("GetPage", "Page")" data-get-page-access-url="@Url.Action("GetPageAccess", "Page")" data-get-page-roles-url="@Url.Action("GetRoles", "Page")" data-save-page-access-url="@Url.Action("SavePageAccess", "Page")"
+         data-remove-page-access-url="@Url.Action("RemovePageAccess", "Page")" data-save-page-url="@Url.Action("SaveChanges", "Page")" data-get-user-url="@Url.Action("GetUser", "User")" data-save-user-url="@Url.Action("SaveChanges", "User")" data-get-user-roles-url="@Url.Action("GetUserRoles", "User")"
+         data-remove-user-roles-url="@Url.Action("RemoveUserRoles", "User")" data-save-user-roles-url="@Url.Action("SaveUserRoles", "User")" data-get-dashboard-count-url="@Url.Action("GetDashboardCount", "Dashboard")" data-get-myprofile-url="@Url.Action("GetMyProfile", "User")" data-delete-role-url="@Url.Action("Delete", "Role")">
+        <!--Sidebar Menu Starts-->
+        <aside class="menu-sidebar js-right-sidebar d-block">
+            <div class="logo">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/logo-revise.png")" alt="Philippine Veterans Affairs Office" />
+                </a>
+            </div>
+            @Html.Partial("_Navigation")
+        </aside>
+        <!--Sidebar Menu ends-->
+        <!--Dashboard content Wrapper starts-->
+        <div class="dash-content-wrap">
+            <!-- Top header starts-->
+            <header class="db-top-header">
+                <div class="container-fluid">
+                    <div class="row align-items-center">
+                        <div class="col-md-8 col-sm-6 col-4">
+                            <div class="site-navbar-wrap v2 style2">
+                                <div class="site-navbar">
+                                    <nav class="site-navigation">
+                                        <div class="container">
+
+                                        </div>
+                                    </nav>
+                                    <div class="d-lg-none sm-right">
+                                        <a href="#" class="mobile-bar js-menu-toggle">
+                                            <span class="lnr lnr-menu"></span>
+                                        </a>
+                                    </div>
+                                    <!--mobile-menu starts -->
+                                    <div class="site-mobile-menu">
+                                        <div class="site-mobile-menu-header">
+                                            <div class="site-mobile-menu-close  js-menu-toggle">
+                                                <span class="lnr lnr-cross"></span>
+                                            </div>
+                                        </div>
+                                        <div class="site-mobile-menu-body"></div>
+                                    </div>
+                                    <!--mobile-menu ends-->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-6 col-8">
+                            <div class="header-button">
+                                @Html.Partial("_Notification")
+                                <div class="header-button-item js-sidebar-btn">
+                                    <img id="user-avatar-image">
+                                    <span><span id="current-user"></span> <i class="ion-arrow-down-b"></i></span>
+                                </div>
+                                <div class="setting-menu js-right-sidebar d-none d-lg-block">
+                                    <div class="account-dropdown__body">
+                                        <div class="account-dropdown__item">
+                                            <a href="/Administration/MyProfile/">
+                                                My Profile
+                                            </a>
+                                        </div>
+                                        <div class="account-dropdown__item">
+                                            <a id="logout" href="">
+                                                Logout
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <!-- Top header ends-->
+            <div class="dash-content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            @RenderBody()
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Dashboard footer starts-->
+            <div class="dash-footer">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="copyright">
+                                Copyright © @DateTime.Now.Year <strong class="text-success font-weight-bold">Philippine Veterans Affairs Office (PVAO)</strong>. All Rights Reserved.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Dashboard footer ends-->
+        </div>
+        <!--Dashboard content Wrapper ends-->
+    </div>
+
+    @Scripts.Render("~/Scripts/jquery")
+    @RenderSection("scripts", required: false)
+
+    @Scripts.Render("~/Scripts/layout")
+</body>
+</html>
