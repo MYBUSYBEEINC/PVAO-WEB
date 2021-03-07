@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using PVAOWeb.Helpers;
 using PVAOWeb.Models;
 
 namespace PVAOWeb.Controllers
 {
-    public class PageController : Controller
+    public class PageController : BaseController
     {
         [HttpPost]
         public ActionResult GetPages(int currentPage, string searchText)

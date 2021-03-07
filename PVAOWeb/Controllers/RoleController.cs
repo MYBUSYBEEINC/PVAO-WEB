@@ -2,19 +2,18 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using PVAOWeb.Helpers;
 using PVAOWeb.Models;
 
 namespace PVAOWeb.Controllers
 {
-    public class RoleController : Controller
+    public class RoleController : BaseController
     {
         [HttpPost]
         public ActionResult GetRoles(int currentPage, string searchText)
         {
-            var pageSize = int.Parse(ConfigurationManager.AppSettings["PageSize"].ToString());
+            var pageSize = int.Parse(ConfigurationManager.AppSettings["PageSize"]);
 
             using (PVAOEntities _dbContext = new PVAOEntities())
             {

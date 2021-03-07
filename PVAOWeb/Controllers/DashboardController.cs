@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using PVAOWeb.Helpers;
 
 namespace PVAOWeb.Controllers
 {
-    public class DashboardController : Controller
+    public class DashboardController : BaseController
     {
         [AuthenticateUser]
         public ActionResult Index()

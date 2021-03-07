@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -11,7 +10,7 @@ using PVAOWeb.Models;
 
 namespace PVAOWeb.Controllers
 {
-    public class UserController : Controller
+    public class UserController : BaseController
     {
         [HttpPost]
         public ActionResult GetUsers(int currentPage, string searchText)

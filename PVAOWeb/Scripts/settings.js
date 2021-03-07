@@ -118,39 +118,39 @@
     form.getSettings = function (id) {
         $.ajax({
             type: 'GET',
-            url: $('#page-wrapper').attr('data-get-settings-url'),
-            data: { 'id': id },
+            url: 'http://localhost:55653/api/settings/getbyid?' + $.param({ id: 1 }),
             contentType: 'application/json; charset=utf-8',
             success: function (response) {
-                var settings = response[0];
+                var settings = response;
+                console.log(settings);
 
-                $('#company-name-text').val(settings.companyName);
-                $('#phone-number-text').val(settings.phoneNumber);
-                $('#company-email-text').val(settings.emailAddress);
-                $('#company-mobile-text').val(settings.mobileNumber);
-                $('#company-address-text').val(settings.address);
-                $('#about-us-text').val(settings.aboutUs);
-                $('#facebook-account-text').val(settings.facebook);
-                $('#twitter-phone-text').val(settings.twitter);
-                $('#youtube-channel-text').val(settings.youTube);
-                $('#years-experience-text').val(settings.yearsOfExperience);
-                $('#happy-customer-text').val(settings.happyCustomers);
-                $('#settings-from-email-text').val(settings.fromEmail);
-                $('#settings-from-name-text').val(settings.fromName);
-                $('#settings-server-name-text').val(settings.serverName);
-                $('#smtp-port-text').val(settings.smtpPort);
-                $('#settings-username-text').val(settings.username);
-                $('#settings-password-text').val(settings.password);
-                $('#enable-ssl-check').prop('checked', settings.enableSSL);
-                $('#max-signon-attempts-text').val(settings.maxSignOnAttempts);
-                $('#settings-expires-in-text').val(settings.expiresIn);
-                $('#min-password-length-text').val(settings.minPasswordLength);
-                $('#min-special-char-text').val(settings.minSpecialCharacters);
-                $("#enforce-password-history-ddl").val(settings.enforcePasswordHistory).change();
-                $('#settings-created-by').text(settings.createdBy);
-                $('#settings-date-created').text(settings.dateCreated);
-                $('#settings-updated-by').text(settings.updatedBy);
-                $('#settings-date-updated').text(settings.dateUpdated);
+                $('#company-name-text').val(settings.settings.companyName);
+                $('#phone-number-text').val(settings.settings.phoneNumber);
+                $('#company-email-text').val(settings.settings.emailAddress);
+                $('#company-mobile-text').val(settings.settings.mobileNumber);
+                $('#company-address-text').val(settings.settings.address);
+                $('#about-us-text').val(settings.settings.aboutUs);
+                $('#facebook-account-text').val(settings.settings.facebook);
+                $('#twitter-phone-text').val(settings.settings.twitter);
+                $('#youtube-channel-text').val(settings.settings.youTube);
+                $('#years-experience-text').val(settings.settings.yearsOfExperience);
+                $('#happy-customer-text').val(settings.settings.happyCustomers);
+                $('#settings-from-email-text').val(settings.settings.fromEmail);
+                $('#settings-from-name-text').val(settings.settings.fromName);
+                $('#settings-server-name-text').val(settings.settings.serverName);
+                $('#smtp-port-text').val(settings.settings.smtpPort);
+                $('#settings-username-text').val(settings.settings.username);
+                $('#settings-password-text').val(settings.settings.password);
+                $('#enable-ssl-check').prop('checked', settings.settings.enableSSL);
+                $('#max-signon-attempts-text').val(settings.settings.maxSignOnAttempts);
+                $('#settings-expires-in-text').val(settings.settings.expiresIn);
+                $('#min-password-length-text').val(settings.settings.minPasswordLength);
+                $('#min-special-char-text').val(settings.settings.minSpecialCharacters);
+                $("#enforce-password-history-ddl").val(settings.settings.enforcePasswordHistory).change();
+                $('#settings-created-by').text(settings.settings.createdBy);
+                $('#settings-date-created').text(settings.settings.dateCreated);
+                $('#settings-updated-by').text(settings.settings.updatedBy);
+                $('#settings-date-updated').text(settings.settings.dateUpdated);
             },
             error: function (err) {
                 console.log(err);

@@ -2,10 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
-using System.Net;
 using System.Net.Mail;
-using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 using PVAOWeb.Helpers;
 using PVAOWeb.Models;
@@ -13,7 +10,7 @@ using static PVAOWeb.Helpers.LoginEnum;
 
 namespace PVAOWeb.Controllers
 {
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         // GET: Account
         public ActionResult Login()
