@@ -26,7 +26,7 @@
                 }
 
                 <ul class="list-unstyled navbar__list">
-                    @foreach (var item in pages.Where(x => parentMenus.Contains(x.Id)).ToList())
+                    @foreach (var item in pages.Where(x => parentMenus.Contains(x.Id)).OrderBy(x => x.Order).ToList())
                     {
                         if (pages.Where(x => x.ParentMenu == @item.ParentMenu & !x.IsParent).Count() != 0)
                         {
