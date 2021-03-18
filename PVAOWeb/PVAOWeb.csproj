@@ -135,6 +135,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdministrationController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\OverRemittanceController.cs" />
     <Compile Include="Controllers\PageController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
@@ -2129,6 +2130,9 @@
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Views\Shared\_Notification.cshtml" />
     <Content Include="Views\Administration\MyProfile.cshtml" />
+    <Content Include="Views\OverRemittance\ForApproval.cshtml" />
+    <Content Include="Views\OverRemittance\Index.cshtml" />
+    <Content Include="Views\OverRemittance\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
