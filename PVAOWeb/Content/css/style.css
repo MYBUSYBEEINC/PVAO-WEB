@@ -2575,7 +2575,7 @@ ul.hero_list li:last-child {
 .input-search:before {
     color: #222222;
     position: absolute;
-    top: 10px;
+    top: 8px;
     left: 15px;
     content: "\e86f";
     font-family: "Linearicons-Free";
@@ -2583,7 +2583,7 @@ ul.hero_list li:last-child {
 }
 
 .listing-filter input[type="text"] {
-    padding: 4px 15px 0 45px;
+    padding: 4px 15px 3px 40px;
     width: 100%;
     border: 1px solid #ddd;
     border-radius: 3px;
@@ -13878,3 +13878,11 @@ span.infobox_rate {
 .greetings {
     margin-bottom: -100px;
 }
+
+.showing-entries { margin-top: 5px; }
+
+.list-filter { margin-left: 10px; }
+
+.dropdown { margin-right: 10px; height: 40px !important;  }
+
+.input-search > input { width: 400px !important; height:38px !important; }
