@@ -1816,8 +1816,6 @@ ul.buttons li {
 
 }
 
-
-
 .statistic__item h2 {
     font-weight: 500;
     color: #fff;
@@ -1826,9 +1824,17 @@ ul.buttons li {
     line-height: 1.2;
 }
 
+.statistic__item h3 {
+    font-weight: 500;
+    color: #fff;
+    font-size: 25px;
+    margin-bottom: 0;
+    line-height: 1.2;
+}
+
 .statistic__item .desc {
     font-size: 14px;
-    text-transform: capitalize;
+    text-transform: none;
     font-weight: 400;
     color: #fff;
 }

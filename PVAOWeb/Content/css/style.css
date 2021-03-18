@@ -7765,8 +7765,8 @@ ul.icon li::before {
 .table th {
     border-top: none;
     vertical-align: middle;
-    font-weight: bold;
-    font-size: 16px;
+    font-weight: normal;
+    font-size: 15px;
 }
 
 .table-content table td {
@@ -13878,4 +13878,3 @@ span.infobox_rate {
 .greetings {
     margin-bottom: -100px;
 }
-
