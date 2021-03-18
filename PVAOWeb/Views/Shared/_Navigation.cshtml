@@ -1,4 +1,4 @@
-﻿@using PVAOWeb.Models;
+﻿@using PVAOWebPortal.Models;
 
 @using (PVAOEntities _dbContext = new PVAOEntities())
 {
@@ -25,39 +25,39 @@
                     }
                 }
 
-                <ul class="list-unstyled navbar__list">
-                    @foreach (var item in pages.Where(x => parentMenus.Contains(x.Id)).OrderBy(x => x.Order).ToList())
+            <ul class="list-unstyled navbar__list">
+                @foreach (var item in pages.Where(x => parentMenus.Contains(x.Id)).OrderBy(x => x.Order).ToList())
+                {
+                    if (pages.Where(x => x.ParentMenu == @item.ParentMenu & !x.IsParent).Count() != 0)
                     {
-                        if (pages.Where(x => x.ParentMenu == @item.ParentMenu & !x.IsParent).Count() != 0)
-                        {
-                            string absolutePath = HttpContext.Current.Request.Url.AbsolutePath.Split('/')[1];
-                            string jsArrow = absolutePath == item.PageName ? "js-arrow open" : "js-arrow";
-                            string display = absolutePath == item.PageName ? "display: block;" : "display: none;";
+                        string absolutePath = HttpContext.Current.Request.Url.AbsolutePath.Split('/')[1];
+                        string jsArrow = absolutePath == item.PageName ? "js-arrow open" : "js-arrow";
+                        string display = absolutePath == item.PageName ? "display: block;" : "display: none;";
 
-                            <li class="has-sub">
-                                <a class="@jsArrow" href="#">
-                                    <i class="@item.Icon"></i>@item.PageName
-                                </a>
-                                <ul class="list-unstyled navbar__sub-list js-sub-list" style="@display">
-                                    @foreach (var sub in pages.Where(x => x.ParentMenu == item.ParentMenu && !x.IsParent).ToList())
-                                    {
-                                        <li>
-                                            <a href="@sub.UrlPath">@sub.PageName</a>
-                                        </li>
-                                    }
-                                </ul>
-                            </li>
-                        }
-                        else
-                        {
-                            <li>
-                                <a href="@item.UrlPath">
-                                    <i class="@item.Icon"></i>@item.PageName
-                                </a>
-                            </li>
-                        }
+                        <li class="has-sub">
+                            <a class="@jsArrow" href="#">
+                                <i class="@item.Icon"></i>@item.PageName
+                            </a>
+                            <ul class="list-unstyled navbar__sub-list js-sub-list" style="@display">
+                                @foreach (var sub in pages.Where(x => x.ParentMenu == item.ParentMenu && !x.IsParent).ToList())
+                                {
+                                    <li>
+                                        <a href="@sub.UrlPath">@sub.PageName</a>
+                                    </li>
+                                }
+                            </ul>
+                        </li>
                     }
-                </ul>
+                    else
+                    {
+                        <li>
+                            <a href="@item.UrlPath">
+                                <i class="@item.Icon"></i>@item.PageName
+                            </a>
+                        </li>
+                    }
+                }
+            </ul>
             </nav>
         </div>
     }
