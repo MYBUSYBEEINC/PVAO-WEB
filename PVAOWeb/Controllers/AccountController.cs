@@ -112,35 +112,40 @@ namespace PVAOWeb.Controllers
         {
             using (PVAOEntities _dbContext = new PVAOEntities())
             {
-                int userId = (int)Session["UserID"];
-
-                _dbContext.Configuration.ProxyCreationEnabled = false;
-
-                var result = _dbContext.Users.Where(x => x.Id == userId).ToList();
-
                 List<object> users = new List<object>();
 
-                foreach (var item in result)
+                if (Session["UserID"] != null)
                 {
-                    string avatarPath = ConfigurationManager.AppSettings["AvatarPath"].ToString();
+                    int userId = (int)Session["UserID"];
 
-                    var data = new
+                    _dbContext.Configuration.ProxyCreationEnabled = false;
+
+                    var result = _dbContext.Users.Where(x => x.Id == userId).ToList();
+
+                    foreach (var item in result)
                     {
-                        id = item.Id,
-                        lastName = item.LastName,
-                        firstName = item.FirstName,
-                        userName = item.UserName,
-                        password = item.Password,
-                        emailAddress = item.EmailAddress,
-                        phoneNumber = item.PhoneNumber,
-                        address = item.Address,
-                        userStatus = item.UserStatus,
-                        avatarUrl = string.Format(@"{0}{1}", avatarPath.Replace("~", string.Empty), item.AvatarUrl != null || item.AvatarUrl != string.Empty ? item.AvatarUrl : "no-image-available.jpg")
-                    };
+                        string avatarPath = ConfigurationManager.AppSettings["AvatarPath"].ToString();
 
-                    users.Add(data);
+                        var data = new
+                        {
+                            id = item.Id,
+                            lastName = item.LastName,
+                            firstName = item.FirstName,
+                            userName = item.UserName,
+                            password = item.Password,
+                            emailAddress = item.EmailAddress,
+                            phoneNumber = item.PhoneNumber,
+                            address = item.Address,
+                            userStatus = item.UserStatus,
+                            avatarUrl = string.Format(@"{0}{1}", avatarPath.Replace("~", string.Empty), item.AvatarUrl != null || item.AvatarUrl != string.Empty ? item.AvatarUrl : "no-image-available.jpg")
+                        };
+
+                        users.Add(data);
+                    }
                 }
-                    
+                else
+                    RedirectToAction("Login", "Account");
+
                 return Json(users, JsonRequestBehavior.AllowGet);
             }
         }
