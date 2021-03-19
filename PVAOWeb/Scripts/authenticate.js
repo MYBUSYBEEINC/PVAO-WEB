@@ -9,6 +9,14 @@
         $('#login-validation-alert').hide();
     },
     form._events = function () {
+        $('#password-text').keydown(function (e) { 
+            var keyCode = (event.keyCode ? event.keyCode : event.which);
+
+            if (keyCode == 13) {
+                $('#login-btn').trigger('click');
+            }
+        });
+
         $('#login-btn').click(function (e) {
             e.preventDefault();
 
