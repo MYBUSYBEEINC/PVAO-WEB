@@ -133,6 +133,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AccruedController.cs" />
     <Compile Include="Controllers\AdministrationController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\OverRemittanceController.cs" />
@@ -1984,6 +1985,7 @@
       <DependentUpon>PVAOModel.edmx</DependentUpon>
       <LastGenOutput>PVAOModel.cs</LastGenOutput>
     </Content>
+    <Content Include="Scripts\accrued.js" />
     <Content Include="Scripts\chart.js" />
     <Content Include="Scripts\dashboard-page.js" />
     <Content Include="Scripts\dashboard.js" />
@@ -2134,6 +2136,10 @@
     <Content Include="Views\OverRemittance\ForApproval.cshtml" />
     <Content Include="Views\OverRemittance\Index.cshtml" />
     <Content Include="Views\OverRemittance\List.cshtml" />
+    <Content Include="Views\Accrued\Index.cshtml" />
+    <Content Include="Views\Accrued\List.cshtml" />
+    <Content Include="Views\Accrued\ForApproval.cshtml" />
+    <Content Include="Views\Accrued\CreateSOD.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
