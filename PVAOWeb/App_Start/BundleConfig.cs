@@ -38,6 +38,9 @@ namespace PVAOWeb
             bundles.Add(new ScriptBundle("~/Scripts/dashboard").Include(
                     "~/Scripts/dashboard-page.js"));
 
+            bundles.Add(new ScriptBundle("~/Scripts/overremittance").Include(
+                   "~/Scripts/overremittance.js"));
+
             bundles.Add(new ScriptBundle("~/Scripts/administration/user").Include(
                     "~/Scripts/user.js"));
 
