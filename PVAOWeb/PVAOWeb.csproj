@@ -2026,6 +2026,7 @@
     <Content Include="Scripts\markerclusterer.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\myprofile.js" />
+    <Content Include="Scripts\overremittance.js" />
     <Content Include="Scripts\page.js" />
     <Content Include="Scripts\perfect-scrollbar.min.js" />
     <Content Include="Scripts\plugin.js" />

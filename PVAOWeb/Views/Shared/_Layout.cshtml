@@ -18,6 +18,17 @@
     @Styles.Render("~/Content/css")
 
     @Scripts.Render("~/bundles/modernizr")
+
+    <script type="text/javascript">
+        function dropdownAction(event, parent) {
+            $(`#${parent}`).attr('data-id', $(`#${event.id}`).attr('data-id'));
+            $(`#${parent}`).attr('data-description', $(`#${event.id}`).attr('data-description'));
+
+            $(`#${parent}`).text($(`#${event.id}`).attr('data-description'));
+
+            return false;
+        }
+    </script>
 </head>
 <body>
     <!--Preloader starts-->
