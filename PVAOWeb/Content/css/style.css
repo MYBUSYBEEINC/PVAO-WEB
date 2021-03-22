@@ -13883,6 +13883,33 @@ span.infobox_rate {
 
 .list-filter { margin-left: 10px; }
 
-.dropdown { margin-right: 10px; height: 40px !important;  }
+.dropdown { 
+    margin-right: 10px;
+    height: 40px !important; 
+}
 
-.input-search > input { width: 400px !important; height:38px !important; }
+.input-search > input { 
+    width: 310px !important; 
+    height:38px !important; 
+}
+
+#remittance-approval .dropdown-toggle {
+    width: 300px;
+}
+
+#remittance-approval .input-search > input {
+    width: 590px !important;
+    height: 38px !important;
+}
+
+#bs-dropdown-action { width: 350px; }
+
+#remittance-approval .bs-dropdown-mnu { width: 350px; }
+
+#yr-dropdown-action { width: 110px; }
+
+#remittance-approval .mt-dropdown-mnu { width: 110px; }
+
+#mt-dropdown-action { width: 110px; }
+
+#remittance-approval .mt-dropdown-mnu { width: 110px; }
