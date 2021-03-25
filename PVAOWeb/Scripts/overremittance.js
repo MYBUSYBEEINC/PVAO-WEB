@@ -2,9 +2,15 @@
     var form = this;
 
     form._construct = function () {
-        form.getBenefitStatuses();
+        form._events();
     },
     form._events = function () {
+        //$(document).ready(function (e) {
+        //    e.preventDefault();
+        //    form.getBenefitStatuses();
+        //});
+        $(window).on("load", form.getBenefitStatuses);
+        //form.getBenefitStatuses();
     },
     form.getBenefitStatuses = function() {
         $.get("http://localhost:55653/api/overremittance/getbenefitstatuses", function (data) {
