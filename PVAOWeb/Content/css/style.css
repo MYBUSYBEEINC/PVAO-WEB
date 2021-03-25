@@ -13904,6 +13904,10 @@ span.infobox_rate {
 
 #bs-dropdown-action { width: 350px; }
 
+#over-remittance-list .bs-dropdown-mnu {
+    width: 350px;
+}
+
 #remittance-approval .bs-dropdown-mnu { width: 350px; }
 
 #yr-dropdown-action { width: 110px; }
