@@ -137,8 +137,11 @@
         </div>
         <!--Dashboard content Wrapper ends-->
     </div>
-
+    <script>
+        window.webApiUrl = '@System.Configuration.ConfigurationManager.AppSettings["webApiBaseUrl"]';
+    </script>
     @Scripts.Render("~/Scripts/jquery")
+
     @RenderSection("scripts", required: false)
 
     @Scripts.Render("~/Scripts/layout")
