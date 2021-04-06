@@ -7763,7 +7763,7 @@ ul.icon li::before {
 
 .table td,
 .table th {
-    border-top: none;
+    /*border-top: none;*/
     vertical-align: middle;
     font-weight: normal;
     font-size: 15px;
@@ -13889,7 +13889,7 @@ span.infobox_rate {
 }
 
 .input-search > input { 
-    width: 310px !important; 
+    width: 300px !important; 
     height:38px !important; 
 }
 
@@ -13917,3 +13917,45 @@ span.infobox_rate {
 #mt-dropdown-action { width: 110px; }
 
 #remittance-approval .mt-dropdown-mnu { width: 110px; }
+
+.popup-wrapper { margin-top: 20px; }
+
+.list-filter {
+    font-size: 15px;
+    font-weight: normal;
+}
+
+.detail-filter {
+    margin-left: 200px;
+}
+
+.coverage-filter {
+    margin-top: -5px;
+}
+
+.date-label {
+    margin-left: 50px;
+    margin-top: -5px;
+}
+
+.details-header {
+    color: #f7f7f7;
+    background: #009246;
+}
+
+.details-header h3 {
+    font-size: 24px !important;
+    color: #f7f7f7;
+}
+
+#issued-check-table tbody tr {
+    text-align: center
+}
+
+#issued-check-table .right {
+    text-align: right;
+}
+
+.details-section { 
+    margin-bottom: -20px !important;
+}
