@@ -5,8 +5,12 @@
         form._events();
 
         form.getBenefitStatuses();
+        form.getOverremittanceList();
     },
     form._events = function () {
+        $(document).on("click", "button", function () {
+            window.open('/overremittance/details', '_blank');
+        });
     },
     form.getBenefitStatuses = function () {
         $.get(`${window.webApiUrl}overremittance/getbenefitstatuses`)
@@ -30,6 +34,46 @@
                 console.log('There is a problem fetching on benefit status. Please try again later.');
             }
         );
+    },
+    form.getOverremittanceList = function() {
+        $.get(`${window.webApiUrl}overremittance/getoverremittancelist`)
+            .done(function (data) {
+                var header = '<tr>';
+                header += "<th scope='col'>Claim Number</th>";
+                header += "<th scope='col'>VDMS Number</th>";
+                header += "<th scope='col'>Beneficiary Name</th>";
+                header += "<th scope='col'>Age</th>";
+                header += "<th scope='col'>Gender</th>";
+                header += "<th scope='col'>Benefit Code</th>";
+                header += "<th scope='col'>Amount</th>";
+                header += "<th scope='col'>Status</th>";
+                header += "<th scope='col' class='text-center'>Action</th>";
+                header += '</tr>';
+                $('#over-remittance-list .thead-dark').html(header);
+
+                var list = "<tr>";
+                for (var i = 0; i < data.length; i++) {
+                    list += "<tr>";
+                    list += "<td></td>"; // NO DATA AVAILABLE
+                    list += "<td>" + data[i].vdmsNo + "</td>";
+                    list += "<td>" + data[i].firstName + " " + data[i].lastName + "</td>";
+                    list += "<td>" + data[i].age + "</td>";
+                    list += "<td>" + data[i].sex + "</td>";
+                    list += "<td></td>"; // NO DATA AVAILABLE
+                    list += "<td></td>"; // NO DATA AVAILABLE
+                    list += "<td></td>"; // NO DATA AVAILABLE
+                    list += "<td class='text-center'>";
+                    list += "<button type='button' class='btn btn-primary'><i class='far fa-eye'></i> View</button >";
+                    list += "</td >";
+                    list += "</tr>";
+                }
+
+                list += "</tr>";
+                $('#list').html(list);
+            }).fail(function(error) {
+                    console.log('There is a problem fetching on benefit status. Please try again later.');
+                }
+            );
     }
 }
 
