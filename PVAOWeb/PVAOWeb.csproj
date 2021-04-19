@@ -150,7 +150,13 @@
     <Compile Include="Helpers\LoginEnum.cs" />
     <Compile Include="Helpers\Pager.cs" />
     <Compile Include="Helpers\ResponseStatusEnum.cs" />
+    <Compile Include="Models\BenefitStatu.cs">
+      <DependentUpon>PVAOModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Company.cs">
+      <DependentUpon>PVAOModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\C__EFMigrationsHistory.cs">
       <DependentUpon>PVAOModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Page.cs">
@@ -1793,9 +1799,13 @@
     <Content Include="Content\images\agents\company_4.jpg" />
     <Content Include="Content\images\agents\company_5.jpg" />
     <Content Include="Content\images\agents\ortigas_land.jpeg" />
-    <Content Include="Content\images\agents\pie_margallo.jpg" />
     <Content Include="Content\images\authentication-ssp.png" />
-    <Content Include="Content\images\avatar\vernie-avatar.png" />
+    <Content Include="Content\images\avatar\avatar_12.png" />
+    <Content Include="Content\images\avatar\download.jpg" />
+    <Content Include="Content\images\avatar\head-art.png" />
+    <Content Include="Content\images\avatar\no-image-available.jpg" />
+    <Content Include="Content\images\avatar\pvao-avatar.png" />
+    <Content Include="Content\images\avatar\Sam-Worthington-1.jpg" />
     <Content Include="Content\images\bg\about.jpg" />
     <Content Include="Content\images\bg\bg_3.jpg" />
     <Content Include="Content\images\bg\call-to-action-bg.jpg" />
@@ -1868,9 +1878,7 @@
     <Content Include="Content\images\header\hero_6.jpg" />
     <Content Include="Content\images\header\home-video-bg.jpg" />
     <Content Include="Content\images\login-tech.png" />
-    <Content Include="Content\images\logo-blue.png" />
     <Content Include="Content\images\logo-revise.png" />
-    <Content Include="Content\images\logo-white.png" />
     <Content Include="Content\images\others\404.png" />
     <Content Include="Content\images\others\client_1.jpg" />
     <Content Include="Content\images\others\client_2.jpg" />
@@ -1972,6 +1980,7 @@
     <Content Include="Content\images\testimonial\testimonial-2.jpg" />
     <Content Include="Content\images\testimonial\testimonial-5.jpg" />
     <Content Include="Content\images\testimonial\testimonial-7.jpg" />
+    <Content Include="Content\logo-white.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />

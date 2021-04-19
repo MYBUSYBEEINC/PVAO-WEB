@@ -21,8 +21,5 @@ namespace PVAOWeb.Models
         public System.DateTime DateCreated { get; set; }
         public Nullable<int> UpdatedBy { get; set; }
         public Nullable<System.DateTime> DateUpdated { get; set; }
-    
-        public virtual User User { get; set; }
-        public virtual User User1 { get; set; }
     }
 }

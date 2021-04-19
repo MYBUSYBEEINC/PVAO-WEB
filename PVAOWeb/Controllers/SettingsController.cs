@@ -1,107 +1,86 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using PVAOWeb.Helpers;
 using PVAOWeb.Models;
 
-namespace PVAOWeb.Controllers
+namespace ZLiahona.Controllers
 {
-    public class SettingsController : BaseController
+    public class SettingsController : Controller
     {
-        
         [AuthenticateUser]
         public ActionResult Index()
         {
             return View();
         }
 
-        [Authorize]
         [HttpGet]
-        public ActionResult GetSettings(int id)
+        public ActionResult GetSettings()
         {
-            // USING DB
-            //using (PVAOEntities _dbContext = new PVAOEntities())
-            //{
-            //    _dbContext.Configuration.ProxyCreationEnabled = false;
+            using (PVAOEntities _dbContext = new PVAOEntities())
+            {
+                _dbContext.Configuration.ProxyCreationEnabled = false;
 
-            //    var result = _dbContext.Settings.Where(x => x.Id == id).ToList();
+                var result = _dbContext.Settings.Where(x => x.Id == 1).ToList();
 
-            //    List<object> settings = new List<object>();
+                List<object> settings = new List<object>();
 
-            //    foreach (var item in result)
-            //    {
-            //        var createdBy = _dbContext.Users.FirstOrDefault(x => x.Id == item.CreatedBy);
-            //        string updatedBy = "n/a";
-            //        string dateUpdated = "n/a";
+                foreach (var item in result)
+                {
+                    var createdBy = _dbContext.Users.FirstOrDefault(x => x.Id == item.CreatedBy);
+                    string updatedBy = "n/a";
+                    string dateUpdated = "n/a";
 
-            //        if (item.UpdatedBy != null)
-            //        {
-            //            var user = _dbContext.Users.FirstOrDefault(x => x.Id == item.UpdatedBy);
+                    if (item.UpdatedBy != null)
+                    {
+                        var user = _dbContext.Users.FirstOrDefault(x => x.Id == item.UpdatedBy);
 
-            //            updatedBy = string.Format("{0} {1}", user.FirstName, user.LastName);
-            //            dateUpdated = item.DateUpdated.ToString();
-            //        }
+                        updatedBy = string.Format("{0} {1}", user.FirstName, user.LastName);
+                        dateUpdated = item.DateUpdated.ToString();
+                    }
 
-            //        var company = _dbContext.Companies.FirstOrDefault(x => x.Id == item.Id);
+                    var company = _dbContext.Companies.FirstOrDefault(x => x.Id == item.Id);
 
-            //        var data = new
-            //        {
-            //            id = item.Id,
-            //            companyName = company.CompanyName,
-            //            address = company.Address,
-            //            emailAddress = company.EmailAddress,
-            //            phoneNumber = company.PhoneNumber,
-            //            mobileNumber = company.MobileNumber,
-            //            aboutUs = company.AboutUs,
-            //            facebook = company.Facebook,
-            //            fromEmail = item.FromEmail,
-            //            fromName = item.FromName,
-            //            serverName = item.ServerName,
-            //            smtpPort = item.SMTPPort,
-            //            username = item.Username,
-            //            password = item.Password,
-            //            enableSSL = item.EnableSSL,
-            //            maxSignOnAttempts = item.MaxSignOnAttempts,
-            //            expiresIn = item.ExpiresIn,
-            //            minPasswordLength = item.MinPasswordLength,
-            //            minSpecialCharacters = item.MinSpecialCharacters,
-            //            enforcePasswordHistory = item.EnforcePasswordHistory,
-            //            createdBy = string.Format("{0} {1}", createdBy.FirstName, createdBy.LastName),
-            //            dateCreated = item.DateCreated.ToString(),
-            //            updatedBy = updatedBy,
-            //            dateUpdated = dateUpdated
-            //        };
+                    var data = new
+                    {
+                        id = item.Id,
+                        companyName = company.CompanyName,
+                        address = company.Address,
+                        emailAddress = company.EmailAddress,
+                        phoneNumber = company.PhoneNumber,
+                        mobileNumber = company.MobileNumber,
+                        aboutUs = company.AboutUs,
+                        facebook = company.Facebook,
+                        fromEmail = item.FromEmail,
+                        fromName = item.FromName,
+                        serverName = item.ServerName,
+                        smtpPort = item.SMTPPort,
+                        username = item.Username,
+                        password = item.Password,
+                        enableSSL = item.EnableSSL,
+                        maxSignOnAttempts = item.MaxSignOnAttempts,
+                        expiresIn = item.ExpiresIn,
+                        minPasswordLength = item.MinPasswordLength,
+                        minSpecialCharacters = item.MinSpecialCharacters,
+                        enforcePasswordHistory = item.EnforcePasswordHistory,
+                        createdBy = string.Format("{0} {1}", createdBy.FirstName, createdBy.LastName),
+                        dateCreated = item.DateCreated.ToString(),
+                        updatedBy = updatedBy,
+                        dateUpdated = dateUpdated
+                    };
 
-            //        settings.Add(data);
-            //    }
+                    settings.Add(data);
+                }
 
-            //    return Json(settings, JsonRequestBehavior.AllowGet);
-            //}
-
-            // USING WEB API 
-            //using (var client = new HttpClient())
-            //{
-            //    client.BaseAddress = new Uri($"{WebApiBaseUrl}settings/");
-            //    var responseTask = client.GetAsync("get");
-            //    responseTask.Wait();
-
-            //    var result = responseTask.Result;
-            //    if (result.IsSuccessStatusCode)
-            //    {
-
-            //        var readTask = result.Content.ReadAsStringAsync();
-            //        readTask.Wait();
-
-            //        var settings = readTask.Result;
-            //    }
-            //}
-
-            return null;
+                return Json(settings, JsonRequestBehavior.AllowGet);
+            }
         }
 
         [HttpPost]
-        public ActionResult SaveChanges(int id, string companyName, string address, string emailAddress, string phoneNumber, string mobileNumber, string aboutUs, string facebook, string twitter, string youTube, int yearsOfExperience, int happyCustomers, string fromEmail, 
-            string fromName, string serverName, int smtpPort, string username, string password, bool enableSSL, int maxSignOnAttempts = 0, int expiresIn = 0, int minPasswordLength = 0, int minSpecialCharacters = 0, int enforcePasswordHistory = 5)
+        public ActionResult SaveChanges(int id, string companyName, string address, string emailAddress, string phoneNumber, string mobileNumber, string aboutUs, string facebook, string fromEmail, string fromName, string serverName, int smtpPort, string username, string password, 
+            bool enableSSL, int maxSignOnAttempts = 0, int expiresIn = 0, int minPasswordLength = 0, int minSpecialCharacters = 0, int enforcePasswordHistory = 5)
         {
             try
             {

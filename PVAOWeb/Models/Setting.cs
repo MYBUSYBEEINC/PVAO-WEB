@@ -27,6 +27,8 @@ namespace PVAOWeb.Models
         public int MinPasswordLength { get; set; }
         public int MinSpecialCharacters { get; set; }
         public int EnforcePasswordHistory { get; set; }
+        public int ActivationLinkExpiresIn { get; set; }
+        public string BaseUrl { get; set; }
         public int CreatedBy { get; set; }
         public System.DateTime DateCreated { get; set; }
         public Nullable<int> UpdatedBy { get; set; }

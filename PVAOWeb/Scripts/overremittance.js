@@ -4,9 +4,15 @@
     form._construct = function () {
         form._events();
 
-        form.getBenefitStatuses();
+        //form.getBenefitStatuses();
     },
     form._events = function () {
+        $(document).on('click', '#overremittance-table tbody tr td button.btn', function (e) {
+            e.preventDefault();
+
+            var url = '/OverRemittance/Details';
+            window.open(url, '_blank');
+        });
     },
     form.getBenefitStatuses = function () {
         $.get(`${window.webApiUrl}overremittance/getbenefitstatuses`)

@@ -30,6 +30,8 @@ namespace PVAOWeb.Controllers
 
                 foreach (var item in result)
                 {
+                    var user = _dbContext.Users.FirstOrDefault(x => x.Id == item.CreatedBy);
+
                     var data = new
                     {
                         id = item.Id,
@@ -37,7 +39,7 @@ namespace PVAOWeb.Controllers
                         emailAddress = item.EmailAddress,
                         userStatus = Enum.GetName(typeof(LoginEnum.UserStatus), item.UserStatus),
                         expirationDate = item.ExpirationDate.ToString(),
-                        createdBy = string.Format("{0} {1}", item.User1.FirstName, item.User1.LastName),
+                        createdBy = string.Format("{0} {1}", user.FirstName, user.LastName),
                         dateCreated = item.DateCreated.ToString()
                     };
 

@@ -30,12 +30,14 @@ namespace PVAOWeb.Controllers
 
                 foreach (var item in result)
                 {
+                    var user = _dbContext.Users.FirstOrDefault(x => x.Id == item.CreatedBy);
+
                     var data = new
                     {
                         id = item.Id,
                         roleName = item.RoleName,
                         description = item.Description,
-                        createdBy = string.Format("{0} {1}", item.User.FirstName, item.User.LastName),
+                        createdBy = string.Format("{0} {1}", user.FirstName, user.LastName),
                         dateCreated = item.DateCreated.ToString()
                     };
 

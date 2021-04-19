@@ -14,15 +14,6 @@ namespace PVAOWeb.Models
     
     public partial class User
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public User()
-        {
-            this.Roles = new HashSet<Role>();
-            this.Roles1 = new HashSet<Role>();
-            this.Users1 = new HashSet<User>();
-            this.Users11 = new HashSet<User>();
-        }
-    
         public int Id { get; set; }
         public string LastName { get; set; }
         public string FirstName { get; set; }
@@ -41,16 +32,5 @@ namespace PVAOWeb.Models
         public System.DateTime DateCreated { get; set; }
         public Nullable<int> UpdatedBy { get; set; }
         public Nullable<System.DateTime> DateUpdated { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Role> Roles { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Role> Roles1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<User> Users1 { get; set; }
-        public virtual User User1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<User> Users11 { get; set; }
-        public virtual User User2 { get; set; }
     }
 }

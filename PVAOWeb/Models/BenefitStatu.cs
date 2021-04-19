@@ -12,19 +12,15 @@ namespace PVAOWeb.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Page
+    public partial class BenefitStatu
     {
         public int Id { get; set; }
-        public string PageName { get; set; }
         public string Description { get; set; }
-        public string UrlPath { get; set; }
-        public Nullable<int> ParentMenu { get; set; }
-        public string Icon { get; set; }
-        public int Order { get; set; }
-        public bool IsParent { get; set; }
-        public bool Visible { get; set; }
-        public bool AccessibleByAll { get; set; }
-        public bool Active { get; set; }
+        public string Prefix { get; set; }
+        public string Claimant { get; set; }
+        public int CreatedBy { get; set; }
         public System.DateTime DateCreated { get; set; }
+        public Nullable<int> UpdatedBy { get; set; }
+        public Nullable<System.DateTime> DateUpdated { get; set; }
     }
 }
