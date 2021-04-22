@@ -2,21 +2,28 @@ var Dashboard = function () {
     var form = this;
 
     form._construct = function () {
-            form._events();
+        form.getTotalVeterans();
 
-            form.getVeteransCount();
-        },
-        form._events = function () {
-        },
-        form.getVeteransCount = function () {
-            $.get(`${window.webApiUrl}dashboard/getveteranscount`)
-                .done(function (data) {
-                    $('#veteransCount').text(data);
-                }).fail(function (error) {
-                        console.log('There is a problem fetching on the veterans count. Please try again later.');
-                    }
-                );
-        }
+        form.getTotalBeneficiaries();
+    },
+    form.getTotalVeterans = function () {
+        $.get(`http://localhost:55653/api/dashboard/gettotalveterans`)
+            .done(function (data) {
+                $('#total-veterans').text(data);
+            }).fail(function (error) {
+                    console.log('There is a problem fetching on total veterans count. Please try again later.');
+            }
+        );
+    },
+    form.getTotalBeneficiaries = function () {
+        $.get(`http://localhost:55653/api/dashboard/gettotalbeneficiaries`)
+            .done(function (data) {
+                $('#total-beneficiaries').text(data);
+            }).fail(function (error) {
+                console.log('There is a problem fetching on total beneficiaries count. Please try again later.');
+            }
+        );
+    }
 }
 
 var dashboard = new Dashboard();

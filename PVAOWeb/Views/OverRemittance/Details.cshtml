@@ -16,8 +16,8 @@
                     <div class="most-viewed-detail">
                         <h3 class="display-5 fw-normal">Over-remittance Details</h3>
                         <br />
-                        <p class="list-address"><i class="fas fa-address-card"></i>VDMS #: 09736 - ESCODA, ANTONIO SR. DA</p>
-                        <p>Status: <span class="badge badge-warning">For Approval</span> | Date Applied: 12/18/2020</p>
+                        <p id="vdms-number-name" class="list-address"></p>
+                        <p id="status-claim-number"></p>
                     </div>
                 </div>
             </div>
@@ -89,7 +89,7 @@
                         </div>
                         <div class="form-group">
                             <label>VFP Organization <span>*</span></label>
-                            <input id="claim-status-text" type="text" class="form-control" value="Philippine Veterans Legion" readonly />
+                            <input id="vfp-organization-text" type="text" class="form-control" value="Philippine Veterans Legion" readonly />
                         </div>
                         <div class="row">
                             <div class="col-md-4">
@@ -215,4 +215,6 @@
         </div>
     </div>
 </div>
+
+@Scripts.Render("~/Scripts/overremittance")
 
