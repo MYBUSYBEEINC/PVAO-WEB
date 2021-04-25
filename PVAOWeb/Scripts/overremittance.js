@@ -47,7 +47,7 @@
         );
     },
     form.getOverRemittances = function() {
-        $.get(`http://localhost:55653/api/beneficiary/getoverremittances?currentPage=1&pageSize=10`)
+        $.get(`${window.webApiUrl}beneficiary/getoverremittances?currentPage=1&pageSize=10`)
             .done(function (data) {
                 var overRemittances = data.overRemittances;
 
@@ -93,7 +93,7 @@
         );
     },
     form.getOverRemittanceById = function (id) {
-        $.get(`http://localhost:55653/api/beneficiary/getoverremittancebyid?claimNumber=${id}`)
+        $.get(`${window.webApiUrl}beneficiary/getoverremittancebyid?claimNumber=${id}`)
             .done(function (data) {
                 var overRemittance = data.overRemittance;
 
