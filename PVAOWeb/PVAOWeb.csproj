@@ -1995,7 +1995,9 @@
       <LastGenOutput>PVAOModel.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\accrued.js" />
+    <Content Include="Scripts\api.js" />
     <Content Include="Scripts\chart.js" />
+    <Content Include="Scripts\configuration.js" />
     <Content Include="Scripts\dashboard-page.js" />
     <Content Include="Scripts\dashboard.js" />
     <Content Include="Scripts\infobox.min.js" />

@@ -24,8 +24,6 @@
     <link href="~/Content/css/dashboard.css" rel="stylesheet">
 
     <script type="text/javascript">
-        window.webApiUrl = '@System.Configuration.ConfigurationManager.AppSettings["webApiBaseUrl"]';
-
         function dropdownAction(event, parent) {
             $(`#${parent}`).attr('data-id', $(`#${event.id}`).attr('data-id'));
             $(`#${parent}`).attr('data-description', $(`#${event.id}`).attr('data-description'));

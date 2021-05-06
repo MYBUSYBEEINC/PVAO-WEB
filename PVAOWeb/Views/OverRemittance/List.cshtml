@@ -11,44 +11,11 @@
     </div>
     <div class="row">
         <form class="row hero__form v1 filter listing-filter list-filter">
-            <div class="bs-dropdown dropdown show">
-                <a id="bs-dropdown-action" class="btn btn-secondary dropdown-toggle" href="" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-- Benefit Status --</a>
-                
-                <div class="dropdown-menu bs-dropdown-mnu" aria-labelledby="dropdownMenuLink">
-                    <a id="bs-all" data-id="0" data-description="-- Benefit Status --" class="dropdown-item" href="" onclick="return dropdownAction(this, 'bs-dropdown-action');">-- Benefit Status --</a>
-                    <a id="bs-4" data-id="4" data-description="DC - Disability Pension ( Minor )" class="dropdown-item" href="" onclick="return dropdownAction(this, 'bs-dropdown-action');">DC - Disability Pension ( Minor )</a>
-                    <a id="bs-5" data-id="5" data-description="DW - Disability Pension ( Surviving Spouse )" class="dropdown-item" href="" onclick="return dropdownAction(this, 'bs-dropdown-action');">DW - Disability Pension ( Surviving Spouse )</a>
-                    <a id="bs-10" data-id="10" data-description="TP - Death Pension ( Parent )" class="dropdown-item" href="" onclick="return dropdownAction(this, 'bs-dropdown-action');">TP - Death Pension ( Parent )</a>
-                </div>
-            </div>
+            <div class="bs-dropdown dropdown show"></div>
 
-            @*<div class="bs-dropdown dropdown show"></div>*@
+            <div class="yr-dropdown dropdown show"></div>
 
-            <div class="dropdown show">
-                <a id="yr-dropdown-action" class="btn btn-secondary dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    -- Year --
-                </a>
-
-                <div class="dropdown-menu yr-dropdown-mnu" aria-labelledby="dropdownMenuLink">
-                    <a id="yr-all" data-id="0" data-description="-- Year --" class="dropdown-item" href="" onclick="return dropdownAction(this, 'yr-dropdown-action');">-- Year --</a>
-                    <a id="yr-2021" data-id="1" data-description="2021" class="dropdown-item" href="" onclick="return dropdownAction(this, 'yr-dropdown-action');">2021</a>
-                    <a id="yr-2020" data-id="1" data-description="2020" class="dropdown-item" href="" onclick="return dropdownAction(this, 'yr-dropdown-action');">2020</a>
-                    <a id="yr-2017" data-id="1" data-description="2017" class="dropdown-item" href="" onclick="return dropdownAction(this, 'yr-dropdown-action');">2017</a>
-                </div>
-            </div>
-
-            <div class="dropdown show">
-                <a id="mt-dropdown-action" class="btn btn-secondary dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    -- Month --
-                </a>
-
-                <div class="dropdown-menu mt-dropdown-mnu" aria-labelledby="dropdownMenuLink">
-                    <a id="mt-all" data-id="0" data-description="-- Month --" class="dropdown-item" href="" onclick="return dropdownAction(this, 'mt-dropdown-action');">-- Month --</a>
-                    <a id="mt-january" data-id="1" data-description="January" class="dropdown-item" href="" onclick="return dropdownAction(this, 'mt-dropdown-action');">January</a>
-                    <a id="mt-march" data-id="2" data-description="March" class="dropdown-item" href="" onclick="return dropdownAction(this, 'mt-dropdown-action');">March</a>
-                    <a id="mt-april" data-id="3" data-description="April" class="dropdown-item" href="" onclick="return dropdownAction(this, 'mt-dropdown-action');">April</a>
-                </div>
-            </div>
+            <div class="mt-dropdown dropdown show"></div>
 
             <div class="input-search">
                 <input id="search-text" type="text" placeholder="Search over-remittances here...">
@@ -99,3 +66,4 @@
 </div>
 
 @Scripts.Render("~/Scripts/overremittance")
+@Scripts.Render("~/Scripts/api")

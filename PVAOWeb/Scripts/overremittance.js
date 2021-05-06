@@ -1,5 +1,6 @@
 ﻿var OverRemittance = function () {
     var form = this;
+    var baseUrl = JSON.parse(localStorage.getItem("api")).baseUrl;
 
     form._construct = function () {
         var url = window.location.href;
@@ -13,24 +14,32 @@
         } else {
             form.getBenefitStatuses();
 
+            form.getMonthsByYear();
+
             form.getOverRemittances();
         }
     },
     form._events = function () {
-        $(document).on("click", "button", function (event) {
-            var claimNumber = $(`#${event.currentTarget.id}`).attr('data-id');
+        $(document).on("click", "#over-remittance-list .di-year", function (e) {
+            e.preventDefault();
+
+            form.getMonthsByYear($(this).attr('data-description'));
+        });
+
+        $(document).on("click", "button", function (e) {
+            var claimNumber = $(`#${e.currentTarget.id}`).attr('data-id');
 
             window.open(`/OverRemittance/Details/${claimNumber}`, '_blank');
         });
     },
     form.getBenefitStatuses = function () {
-        $.get(`${window.webApiUrl}overremittance/getbenefitstatuses`)
+        $.get(`${baseUrl}beneficiary/getbenefitstatus`)
             .done(function (data) {
                 var benefitStatus = data.filter(function (item) { return item.prefix == "DW" || item.prefix == "DC" || item.prefix == "TP"; });
 
                 var htmlContent = '<a id="bs-dropdown-action" class="btn btn-secondary dropdown-toggle" href="" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-- Benefit Status --</a>';
                 htmlContent += '<div class="dropdown-menu bs-dropdown-mnu" aria-labelledby="dropdownMenuLink">';
-                htmlContent += '<a id="bs-all" data-id="0" data-description="-- Benefit Status --" class="dropdown-item" href="" onclick="return dropdownAction(this, "bs-dropdown-action");">-- Benefit Status --</a>';
+                htmlContent += `<a id="bs-all" data-id="0" data-description="-- Benefit Status --" class="dropdown-item" href="" onclick="return dropdownAction(this, 'bs-dropdown-action');">-- Benefit Status --</a>`;
 
                     for (var x = 0; x < benefitStatus.length; x++) {
                         var description = `${benefitStatus[x].prefix} - ${benefitStatus[x].description} ( ${benefitStatus[x].claimant} )`;
@@ -47,9 +56,10 @@
         );
     },
     form.getOverRemittances = function() {
-        $.get(`${window.webApiUrl}beneficiary/getoverremittances?currentPage=1&pageSize=10`)
+        $.get(`${baseUrl}beneficiary/getoverremittances?currentPage=1&pageSize=10`)
             .done(function (data) {
                 var overRemittances = data.overRemittances;
+                var years = data.years;
 
                 var htmlContent = '<thead class="thead-dark">';
                     htmlContent += '<tr>';
@@ -60,13 +70,14 @@
                         htmlContent += '<th scope="col">Relation</th>';
                         htmlContent += '<th scope="col">Gender</th>';
                         htmlContent += '<th scope="col">Amount</th>';
+                        htmlContent += '<th scope="col">Date Approved</th>';
                         htmlContent += '<th scope="col" class="text-center">Status</th>';
                         htmlContent += '<th scope="col" class="text-center">Action</th>';
                     htmlContent += '</tr>';
                 htmlContent += '</thead>';
                 htmlContent += '<tbody>';
                     
-                for (var x = 0; x < overRemittances.length; x++) {    
+                for (var x = 0; x < overRemittances.length; x++) { 
                     htmlContent += '<tr>';
                         htmlContent += `<td>${overRemittances[x].claimNumber}</td>`;
                         htmlContent += `<td>${overRemittances[x].benefitCode}</td>`;
@@ -75,25 +86,70 @@
                         htmlContent += `<td>${overRemittances[x].relation}</td>`;
                         htmlContent += `<td>${overRemittances[x].gender}</td>`;
                         htmlContent += `<td>${overRemittances[x].amount}</td>`;
+                        htmlContent += `<td>${new Date(overRemittances[x].dateApproved).toLocaleDateString()}</td>`;
                         htmlContent += `<td class="text-center"><span class="badge badge-warning">${overRemittances[x].status}</span></td>`;
                         htmlContent += '<td class="text-center">';
                             htmlContent += `<button id="or-${overRemittances[x].claimNumber}" data-id="${overRemittances[x].claimNumber}" type="button" data class="btn btn-primary view-btn"><i class="far fa-eye"></i> View</button></td >`;
                         htmlContent += '</td>';
                     htmlContent += '</tr>';
                 }
-                  
+
                 htmlContent += '</tbody>';
 
                 $('#over-remittance-list .header-text').text(`Over-remittance List (${data.totalItems})`);
 
                 $('#over-remittance-list .table').append(htmlContent);
+
+                var htmlContent = '<a id="yr-dropdown-action" class="btn btn-secondary dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-- Year --</a>';
+                htmlContent += '<div class="dropdown-menu yr-dropdown-mnu" aria-labelledby="dropdownMenuLink">';
+                    htmlContent += `<a id="yr-all" data-id="0" data-description="-- Year --" class="dropdown-item di-year" href="" onclick="return dropdownAction(this, 'yr-dropdown-action');">-- Year --</a>`;
+
+                    for (var x = 0; x < years.length; x++) {
+                        htmlContent += `<a id="yr-${years[x]}" data-id="${years[x]}" data-description="${years[x]}" class="dropdown-item di-year" href="" onclick="return dropdownAction(this, 'yr-dropdown-action');">${years[x]}</a>`;
+                    }
+
+                htmlContent += '</div>';
+
+                $('#over-remittance-list .yr-dropdown').html(htmlContent);
             }).fail(function (error) {
                 console.log('There is a problem fetching on over-remittances. Please try again later.');
             }
         );
     },
+    form.getMonthsByYear = function (year) {
+        $.get(`${baseUrl}beneficiary/getoverremittances?currentPage=1&pageSize=10`)
+            .done(function (data) {
+                var dates = data.months;
+                var arrMonths = [];
+
+                for (var i = 0; i < dates.length; i++) {
+                    if (dates[i].split('/')[2] == year) {
+                        var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+                        if (arrMonths.indexOf(months[parseInt(dates[i].split('/')[0]) - 1]) === -1) {
+                            arrMonths.push(months[parseInt(dates[i].split('/')[0]) - 1]);
+                        }
+                    }
+                }
+
+                var htmlContent = '<a id="mt-dropdown-action" class="btn btn-secondary dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-- Month --</a>';
+                htmlContent += '<div class="dropdown-menu mt-dropdown-mnu" aria-labelledby="dropdownMenuLink">';
+                    htmlContent += `<a id="mt-all" data-id="0" data-description="-- Month --" class="dropdown-item di-month" href="" onclick="return dropdownAction(this, 'mt-dropdown-action');">-- Month --</a>`;
+
+                    for (var x = 0; x < arrMonths.length; x++) {
+                        htmlContent += `<a id="yr-${arrMonths[x]}" data-id="${arrMonths[x]}" data-description="${arrMonths[x]}" class="dropdown-item di-month" href="" onclick="return dropdownAction(this, 'mt-dropdown-action');">${arrMonths[x]}</a>`;
+                    }
+
+                htmlContent += '</div>';
+
+                $('#over-remittance-list .mt-dropdown').html(htmlContent);
+            }).fail(function (error) {
+                console.log('There is a problem fetching months filter. Please try again later.');
+            }
+        );
+    },
     form.getOverRemittanceById = function (id) {
-        $.get(`${window.webApiUrl}beneficiary/getoverremittancebyid?claimNumber=${id}`)
+        $.get(`${baseUrl}/beneficiary/getoverremittancebyid?claimNumber=${id}`)
             .done(function (data) {
                 var overRemittance = data.overRemittance;
 
