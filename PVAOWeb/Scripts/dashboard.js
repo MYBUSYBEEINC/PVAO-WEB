@@ -7,7 +7,7 @@ var Dashboard = function () {
         form.getTotalBeneficiaries();
     },
     form.getTotalVeterans = function () {
-        $.get(`http://localhost:55653/api/dashboard/gettotalveterans`)
+        $.get(`${window.webApiUrl}dashboard/gettotalveterans`)
             .done(function (data) {
                 $('#total-veterans').text(data);
             }).fail(function (error) {
@@ -16,7 +16,7 @@ var Dashboard = function () {
         );
     },
     form.getTotalBeneficiaries = function () {
-        $.get(`http://localhost:55653/api/dashboard/gettotalbeneficiaries`)
+        $.get(`${window.webApiUrl}dashboard/gettotalbeneficiaries`)
             .done(function (data) {
                 $('#total-beneficiaries').text(data);
             }).fail(function (error) {
