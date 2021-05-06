@@ -29,6 +29,9 @@ namespace PVAOWeb
                     "~/Content/css/style.css",
                     "~/Content/css/dashboard.css"));
 
+            bundles.Add(new ScriptBundle("~/Scripts/api").Include(
+                    "~/Scripts/api.js"));
+
             bundles.Add(new ScriptBundle("~/Scripts/authenticate").Include(
                     "~/Scripts/authenticate.js"));
 
