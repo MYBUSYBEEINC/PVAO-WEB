@@ -14,16 +14,31 @@
         } else {
             form.getBenefitStatuses();
 
-            form.getMonthsByYear();
+            form.getYearsAndMonths('');
 
-            form.getOverRemittances();
+            form.getOverRemittances($('#search-overremittance-text').val(), '', '');
         }
     },
     form._events = function () {
         $(document).on("click", "#over-remittance-list .di-year", function (e) {
             e.preventDefault();
 
-            form.getMonthsByYear($(this).attr('data-description'));
+            var year = $(this).attr('data-description');
+            var searchText = $('#search-overremittance-text').val();
+
+            form.getYearsAndMonths(year);
+
+            form.getOverRemittances(searchText, year, '');
+        });
+
+        $(document).on("click", "#over-remittance-list .di-month", function (e) {
+            e.preventDefault();
+
+            var year = $('#yr-dropdown-action').text();
+            var month = $(this).attr('data-description');
+            var searchText = $('#search-overremittance-text').val();
+
+            form.getOverRemittances(searchText, year, month);
         });
 
         $(document).on("click", "button", function (e) {
@@ -31,6 +46,21 @@
 
             window.open(`/OverRemittance/Details/${claimNumber}`, '_blank');
         });
+
+        $(document).keypress(function (e) {
+            if (e.which == 13) {
+                e.preventDefault();
+
+                if (e.target.id === 'search-overremittance-text') {
+                    var year = $('#yr-dropdown-action').text();
+                    var month = $('#mt-dropdown-action').text();
+                    var searchText = $('#search-overremittance-text').val();
+
+                    form.getOverRemittances(searchText, year, month);
+                }
+            }
+        });
+
     },
     form.getBenefitStatuses = function () {
         $.get(`${baseUrl}beneficiary/getbenefitstatus`)
@@ -55,12 +85,20 @@
             }
         );
     },
-    form.getOverRemittances = function() {
-        $.get(`${baseUrl}beneficiary/getoverremittances?currentPage=1&pageSize=10`)
+    form.getOverRemittances = function (searchValue, year, month) {
+        var endpointUrl = `${baseUrl}beneficiary/getoverremittances?searchValue=${searchValue}&currentPage=1&pageSize=10`;
+
+        if (year !== '-- Year --' && month !== '-- Month --')
+            endpointUrl = `${baseUrl}beneficiary/getoverremittances?searchValue=${searchValue}&year=${year}&month=${month}&currentPage=1&pageSize=10`;
+        
+
+        if (year !== '-- Year --' && month === '-- Month --')
+            endpointUrl = `${baseUrl}beneficiary/getoverremittances?searchValue=${searchValue}&year=${year}&currentPage=1&pageSize=10`;
+
+        $.get(endpointUrl)
             .done(function (data) {
                 var overRemittances = data.overRemittances;
-                var years = data.years;
-
+                
                 var htmlContent = '<thead class="thead-dark">';
                     htmlContent += '<tr>';
                         htmlContent += '<th scope="col">Claim Number</th>';
@@ -98,58 +136,80 @@
 
                 $('#over-remittance-list .header-text').text(`Over-remittance List (${data.totalItems})`);
 
-                $('#over-remittance-list .table').append(htmlContent);
+                $('#over-remittance-list .table').html(htmlContent);
 
-                var htmlContent = '<a id="yr-dropdown-action" class="btn btn-secondary dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-- Year --</a>';
-                htmlContent += '<div class="dropdown-menu yr-dropdown-mnu" aria-labelledby="dropdownMenuLink">';
-                    htmlContent += `<a id="yr-all" data-id="0" data-description="-- Year --" class="dropdown-item di-year" href="" onclick="return dropdownAction(this, 'yr-dropdown-action');">-- Year --</a>`;
+                if (overRemittances.length != 0) {
+                    $('#no-available-overremittances').hide();
 
-                    for (var x = 0; x < years.length; x++) {
-                        htmlContent += `<a id="yr-${years[x]}" data-id="${years[x]}" data-description="${years[x]}" class="dropdown-item di-year" href="" onclick="return dropdownAction(this, 'yr-dropdown-action');">${years[x]}</a>`;
-                    }
+                    $('#export-excel-button').show();
+                    $('#export-pdf-button').show();
+                } else {
+                    $('#no-available-overremittances').show();
 
-                htmlContent += '</div>';
-
-                $('#over-remittance-list .yr-dropdown').html(htmlContent);
+                    $('#export-excel-button').hide();
+                    $('#export-pdf-button').hide();
+                }
             }).fail(function (error) {
                 console.log('There is a problem fetching on over-remittances. Please try again later.');
             }
         );
     },
-    form.getMonthsByYear = function (year) {
-        $.get(`${baseUrl}beneficiary/getoverremittances?currentPage=1&pageSize=10`)
+    form.getYearsAndMonths = function (year) {
+        $.get(`${baseUrl}beneficiary/getyearsandmonths`)
             .done(function (data) {
-                var dates = data.months;
-                var arrMonths = [];
+                if (year !== '') {
+                    var dates = data.months;
+                    var arrMonths = [];
 
-                for (var i = 0; i < dates.length; i++) {
-                    if (dates[i].split('/')[2] == year) {
-                        var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+                    for (var i = 0; i < dates.length; i++) {
+                        if (dates[i].split('/')[2] == year) {
+                            var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-                        if (arrMonths.indexOf(months[parseInt(dates[i].split('/')[0]) - 1]) === -1) {
-                            arrMonths.push(months[parseInt(dates[i].split('/')[0]) - 1]);
+                            if (arrMonths.indexOf(months[parseInt(dates[i].split('/')[0]) - 1]) === -1) {
+                                arrMonths.push(months[parseInt(dates[i].split('/')[0]) - 1]);
+                            }
                         }
                     }
+
+                    var htmlContent = '<a id="mt-dropdown-action" class="btn btn-secondary dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-- Month --</a>';
+                    htmlContent += '<div class="dropdown-menu mt-dropdown-mnu" aria-labelledby="dropdownMenuLink">';
+                        htmlContent += `<a id="mt-all" data-id="0" data-description="-- Month --" class="dropdown-item di-month" href="" onclick="return dropdownAction(this, 'mt-dropdown-action');">-- Month --</a>`;
+
+                        for (var x = 0; x < arrMonths.length; x++) {
+                            htmlContent += `<a id="yr-${arrMonths[x]}" data-id="${arrMonths[x]}" data-description="${arrMonths[x]}" class="dropdown-item di-month" href="" onclick="return dropdownAction(this, 'mt-dropdown-action');">${arrMonths[x]}</a>`;
+                        }
+
+                    htmlContent += '</div>';
+
+                    $('#over-remittance-list .mt-dropdown').html(htmlContent);
+                } else {
+                    var years = data.years;
+
+                    var yearContent = '<a id="yr-dropdown-action" class="btn btn-secondary dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-- Year --</a>';
+                    yearContent += '<div class="dropdown-menu yr-dropdown-mnu" aria-labelledby="dropdownMenuLink">';
+                        yearContent += `<a id="yr-all" data-id="0" data-description="-- Year --" class="dropdown-item di-year" href="" onclick="return dropdownAction(this, 'yr-dropdown-action');">-- Year --</a>`;
+
+                        for (var x = 0; x < years.length; x++) {
+                            yearContent += `<a id="yr-${years[x]}" data-id="${years[x]}" data-description="${years[x]}" class="dropdown-item di-year" href="" onclick="return dropdownAction(this, 'yr-dropdown-action');">${years[x]}</a>`;
+                        }
+                    yearContent += '</div>';
+
+                    var monthContent = '<a id="mt-dropdown-action" class="btn btn-secondary dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-- Month --</a>';
+                    monthContent += '<div class="dropdown-menu mt-dropdown-mnu" aria-labelledby="dropdownMenuLink">';
+                        monthContent += `<a id="mt-all" data-id="0" data-description="-- Month --" class="dropdown-item di-month" href="" onclick="return dropdownAction(this, 'mt-dropdown-action');">-- Month --</a>`;
+                    monthContent += '</div>';
+
+                    $('#over-remittance-list .yr-dropdown').html(yearContent);
+
+                    $('#over-remittance-list .mt-dropdown').html(monthContent);
                 }
-
-                var htmlContent = '<a id="mt-dropdown-action" class="btn btn-secondary dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-- Month --</a>';
-                htmlContent += '<div class="dropdown-menu mt-dropdown-mnu" aria-labelledby="dropdownMenuLink">';
-                    htmlContent += `<a id="mt-all" data-id="0" data-description="-- Month --" class="dropdown-item di-month" href="" onclick="return dropdownAction(this, 'mt-dropdown-action');">-- Month --</a>`;
-
-                    for (var x = 0; x < arrMonths.length; x++) {
-                        htmlContent += `<a id="yr-${arrMonths[x]}" data-id="${arrMonths[x]}" data-description="${arrMonths[x]}" class="dropdown-item di-month" href="" onclick="return dropdownAction(this, 'mt-dropdown-action');">${arrMonths[x]}</a>`;
-                    }
-
-                htmlContent += '</div>';
-
-                $('#over-remittance-list .mt-dropdown').html(htmlContent);
             }).fail(function (error) {
-                console.log('There is a problem fetching months filter. Please try again later.');
+                console.log('There is a problem fetching years and months filter. Please try again later.');
             }
         );
-    },
+    }
     form.getOverRemittanceById = function (id) {
-        $.get(`${baseUrl}/beneficiary/getoverremittancebyid?claimNumber=${id}`)
+        $.get(`${baseUrl}beneficiary/getoverremittancebyid?claimNumber=${id}`)
             .done(function (data) {
                 var overRemittance = data.overRemittance;
 
@@ -165,10 +225,10 @@
                 $('#veteran-name-text').val(overRemittance.veteranName);
                 $('#nationality-text').val(overRemittance.nationality);
                 $('#vfp-organization-text').val(overRemittance.organization);
-                $('#birth-date-text').val(overRemittance.dateOfBirth.toLocaleDateString());
+                $('#birth-date-text').val(new Date(overRemittance.dateOfBirth).toLocaleDateString());
                 $('#age-text').val(overRemittance.age);
                 $('#gender-text').val(overRemittance.gender);
-                $('#date-death-text').val(overRemittance.dateOfDeath.toLocaleDateString());
+                $('#date-death-text').val(new Date(overRemittance.dateOfDeath).toLocaleDateString());
                 $('#cause-death-text').val(overRemittance.causeOfDeath);
             }).fail(function (error) {
                 console.log('There is a problem fetching on over-remittance details. Please try again later.');
