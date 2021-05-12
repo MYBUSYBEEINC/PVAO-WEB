@@ -41,6 +41,14 @@
             form.getOverRemittances(searchText, year, month);
         });
 
+        $(document).on("click", "#export-excel-button", function (e) {
+            excelHelper.exportToExcel('overremittance-table', 'overremittancetable');
+        });
+
+        $(document).on("click", "#export-excel-forapproval-button", function (e) {
+            excelHelper.exportToExcel('overremittance-forapproval-table', 'overremittancetable');
+        });
+
         $(document).on("click", "button", function (e) {
             var claimNumber = $(`#${e.currentTarget.id}`).attr('data-id');
 

@@ -28,7 +28,7 @@
             </div>
         </form>
         <div class="col-md-12">
-            <table class="table table-hover">
+            <table id="overremittance-forapproval-table" class="table table-hover">
                 <thead class="thead-dark">
                     <tr>
                         <th scope="col">VDMS Number</th>
@@ -168,7 +168,7 @@
             <div class="row">
                 <div class="col-md-7"></div>
                 <div class="col-md-5">
-                    <button type="button" class="btn btn-success"><i class="far fa-file-excel"></i> Export to Excel</button>
+                    <button type="button" id="export-excel-forapproval-button" class="btn btn-success"><i class="far fa-file-excel"></i> Export to Excel</button>
                     <button type="button" class="btn btn-danger"><i class="far fa-file-pdf"></i> Export to PDF</button>
                 </div>
             </div>
@@ -177,3 +177,4 @@
 </div>
 
 @Scripts.Render("~/Scripts/overremittance")
+@Scripts.Render("~/Scripts/excelhelper")
