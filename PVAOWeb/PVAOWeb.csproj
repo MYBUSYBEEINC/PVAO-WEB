@@ -2000,6 +2000,7 @@
     <Content Include="Scripts\configuration.js" />
     <Content Include="Scripts\dashboard-page.js" />
     <Content Include="Scripts\dashboard.js" />
+    <Content Include="Scripts\excelhelper.js" />
     <Content Include="Scripts\infobox.min.js" />
     <Content Include="Scripts\jquery.appear.js" />
     <Content Include="Scripts\jquery.countTo.js" />
