@@ -50,7 +50,11 @@
         });
 
         $(document).on("click", "#export-pdf-button", function (e) {
-            pdfHelper.exportToPdf('#overremittance-table', `overremittancetable_${Date.now()}`, 'landscape' );
+            pdfHelper.exportTableToPdf('#overremittance-table', `overremittancetable_${Date.now()}`, 'landscape' );
+        });
+
+        $(document).on("click", "#export-pdf-forapproval-button", function (e) {
+            pdfHelper.exportTableToPdf('#overremittance-forapproval-table', `overremittancetableforapproval_${Date.now()}`, 'landscape');
         });
 
         $(document).on("click", ".view-btn", function (e) {
