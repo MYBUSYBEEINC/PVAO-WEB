@@ -44,6 +44,9 @@ namespace PVAOWeb
             bundles.Add(new ScriptBundle("~/Scripts/excelhelper").Include(
                     "~/Scripts/excelhelper.js"));
 
+            bundles.Add(new ScriptBundle("~/Scripts/pdfhelper").Include(
+                    "~/Scripts/pdfhelper.js"));
+
             bundles.Add(new ScriptBundle("~/Scripts/accrued").Include(
                  "~/Scripts/accrued.js"));
 

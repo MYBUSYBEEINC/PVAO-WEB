@@ -13,4 +13,3 @@
 }
 
 var excelHelper = new ExcelHelper();
-excelHelper._construct();

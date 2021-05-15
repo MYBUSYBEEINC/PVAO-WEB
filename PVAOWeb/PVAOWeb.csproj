@@ -2027,6 +2027,7 @@
     <Content Include="Scripts\js backup\sticky-sidebar.js" />
     <Content Include="Scripts\js backup\swiper.min.js" />
     <Content Include="Scripts\js backup\wow.min.js" />
+    <Content Include="Scripts\jspdf.plugin.autotable.js" />
     <Content Include="Scripts\layout.js" />
     <Content Include="Scripts\leaflet-autocomplete.js" />
     <Content Include="Scripts\leaflet-control-geocoder.js" />
@@ -2042,6 +2043,7 @@
     <Content Include="Scripts\myprofile.js" />
     <Content Include="Scripts\overremittance.js" />
     <Content Include="Scripts\page.js" />
+    <Content Include="Scripts\pdfhelper.js" />
     <Content Include="Scripts\perfect-scrollbar.min.js" />
     <Content Include="Scripts\plugin.js" />
     <Content Include="Scripts\role.js" />

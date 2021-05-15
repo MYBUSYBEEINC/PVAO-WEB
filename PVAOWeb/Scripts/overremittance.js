@@ -49,7 +49,11 @@
             excelHelper.exportToExcel('overremittance-forapproval-table', 'overremittancetable');
         });
 
-        $(document).on("click", "button", function (e) {
+        $(document).on("click", "#export-pdf-button", function (e) {
+            pdfHelper.exportToPdf('#overremittance-table', `overremittancetable_${Date.now()}`, 'landscape' );
+        });
+
+        $(document).on("click", ".view-btn", function (e) {
             var claimNumber = $(`#${e.currentTarget.id}`).attr('data-id');
 
             window.open(`/OverRemittance/Details/${claimNumber}`, '_blank');
