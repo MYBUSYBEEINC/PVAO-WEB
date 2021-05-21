@@ -27,7 +27,8 @@ namespace PVAOWeb
                     "~/Content/css/perfect-scrollbar.css",
                     "~/Content/css/plugin.css",
                     "~/Content/css/style.css",
-                    "~/Content/css/dashboard.css"));
+                    "~/Content/css/dashboard.css",
+                    "~/Content/css/pagination.css"));
 
             bundles.Add(new ScriptBundle("~/Scripts/api").Include(
                     "~/Scripts/api.js"));

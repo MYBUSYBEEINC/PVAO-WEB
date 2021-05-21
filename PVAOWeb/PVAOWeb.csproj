@@ -224,6 +224,7 @@
     <Content Include="Content\css\linearicon-min.css" />
     <Content Include="Content\css\login.css" />
     <Content Include="Content\css\magnific-popup.css" />
+    <Content Include="Content\css\pagination.css" />
     <Content Include="Content\css\perfect-scrollbar.css" />
     <Content Include="Content\css\plugin.css" />
     <Content Include="Content\css\preloader.css" />

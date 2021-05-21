@@ -76,7 +76,6 @@
                 }
             }
         });
-
     },
     form.getBenefitStatuses = function () {
         $.get(`${baseUrl}beneficiary/getbenefitstatus`)
@@ -102,55 +101,70 @@
         );
     },
     form.getOverRemittances = function (searchValue, year, month) {
-        var endpointUrl = `${baseUrl}beneficiary/getoverremittances?searchValue=${searchValue}&currentPage=1&pageSize=10`;
+        var endpointUrl = `${baseUrl}beneficiary/getoverremittances?searchValue=${searchValue}`;
 
         if (year !== '-- Year --' && month !== '-- Month --')
-            endpointUrl = `${baseUrl}beneficiary/getoverremittances?searchValue=${searchValue}&year=${year}&month=${month}&currentPage=1&pageSize=10`;
+            endpointUrl = `${baseUrl}beneficiary/getoverremittances?searchValue=${searchValue}&year=${year}&month=${month}`;
         
-
         if (year !== '-- Year --' && month === '-- Month --')
-            endpointUrl = `${baseUrl}beneficiary/getoverremittances?searchValue=${searchValue}&year=${year}&currentPage=1&pageSize=10`;
+            endpointUrl = `${baseUrl}beneficiary/getoverremittances?searchValue=${searchValue}&year=${year}`;
 
-        $.get(endpointUrl)
-            .done(function (data) {
-                var overRemittances = data.overRemittances;
-                
+        var container = $('#pagination-overremittance');
+        var totalcount, pagesize;
+        container.pagination({
+            dataSource: endpointUrl,
+            locator: 'overRemittances',
+            totalNumberLocator: function (response) {
+                totalcount = response.totalItems;
+                pageSize = response.pageSize;
+                return totalcount;
+            },
+            totalNumber: totalcount,
+            pageSize: 2,
+            showPageNumbers: true,
+            showPrevious: true,
+            showNext: true,
+            showNavigator: true,
+            showFirstOnEllipsisShow: true,
+            showLastOnEllipsisShow: true,
+            callback: function(response, pagination) {
+                var overRemittances = response;
                 var htmlContent = '<thead class="thead-dark">';
-                    htmlContent += '<tr>';
-                        htmlContent += '<th scope="col">Claim Number</th>';
-                        htmlContent += '<th scope="col">Description</th>';
-                        htmlContent += '<th scope="col">VDMS Number</th>';
-                        htmlContent += '<th scope="col">Beneficiary Name</th>';
-                        htmlContent += '<th scope="col">Relation</th>';
-                        htmlContent += '<th scope="col">Gender</th>';
-                        htmlContent += '<th scope="col">Amount</th>';
-                        htmlContent += '<th scope="col">Date Approved</th>';
-                        htmlContent += '<th scope="col" class="text-center">Status</th>';
-                        htmlContent += '<th scope="col" class="text-center">Action</th>';
-                    htmlContent += '</tr>';
+                htmlContent += '<tr>';
+                htmlContent += '<th scope="col">Claim Number</th>';
+                htmlContent += '<th scope="col">Description</th>';
+                htmlContent += '<th scope="col">VDMS Number</th>';
+                htmlContent += '<th scope="col">Beneficiary Name</th>';
+                htmlContent += '<th scope="col">Relation</th>';
+                htmlContent += '<th scope="col">Gender</th>';
+                htmlContent += '<th scope="col">Amount</th>';
+                htmlContent += '<th scope="col">Date Approved</th>';
+                htmlContent += '<th scope="col" class="text-center">Status</th>';
+                htmlContent += '<th scope="col" class="text-center">Action</th>';
+                htmlContent += '</tr>';
                 htmlContent += '</thead>';
                 htmlContent += '<tbody>';
-                    
-                for (var x = 0; x < overRemittances.length; x++) { 
+
+                for (var x = 0; x < overRemittances.length; x++) {
                     htmlContent += '<tr>';
-                        htmlContent += `<td>${overRemittances[x].claimNumber}</td>`;
-                        htmlContent += `<td>${overRemittances[x].benefitCode}</td>`;
-                        htmlContent += `<td>${overRemittances[x].vdmsNumber}</td>`;
-                        htmlContent += `<td>${overRemittances[x].beneficiaryName}</td>`;
-                        htmlContent += `<td>${overRemittances[x].relation}</td>`;
-                        htmlContent += `<td>${overRemittances[x].gender}</td>`;
-                        htmlContent += `<td>${overRemittances[x].amount}</td>`;
-                        htmlContent += `<td>${new Date(overRemittances[x].dateApproved).toLocaleDateString()}</td>`;
-                        htmlContent += `<td class="text-center"><span class="badge badge-warning">${overRemittances[x].status}</span></td>`;
-                        htmlContent += '<td class="text-center">';
-                            htmlContent += `<button id="or-${overRemittances[x].claimNumber}" data-id="${overRemittances[x].claimNumber}" type="button" data class="btn btn-primary view-btn"><i class="far fa-eye"></i> View</button></td >`;
-                        htmlContent += '</td>';
+                    htmlContent += `<td>${overRemittances[x].claimNumber}</td>`;
+                    htmlContent += `<td>${overRemittances[x].benefitCode}</td>`;
+                    htmlContent += `<td>${overRemittances[x].vdmsNumber}</td>`;
+                    htmlContent += `<td>${overRemittances[x].beneficiaryName}</td>`;
+                    htmlContent += `<td>${overRemittances[x].relation}</td>`;
+                    htmlContent += `<td>${overRemittances[x].gender}</td>`;
+                    htmlContent += `<td>${overRemittances[x].amount}</td>`;
+                    htmlContent += `<td>${new Date(overRemittances[x].dateApproved).toLocaleDateString()}</td>`;
+                    htmlContent += `<td class="text-center"><span class="badge badge-warning">${overRemittances[x].status}</span></td>`;
+                    htmlContent += '<td class="text-center">';
+                    htmlContent += `<button id="or-${overRemittances[x].claimNumber}" data-id="${overRemittances[x].claimNumber}" type="button" data class="btn btn-primary view-btn"><i class="far fa-eye"></i> View</button></td >`;
+                    htmlContent += '</td>';
                     htmlContent += '</tr>';
                 }
 
                 htmlContent += '</tbody>';
 
-                $('#over-remittance-list .header-text').text(`Over-remittance List (${data.totalItems})`);
+                $('#over-remittance-list .header-text').text(`Over-remittance List (${totalcount})`);
 
                 $('#over-remittance-list .table').html(htmlContent);
 
@@ -165,10 +179,10 @@
                     $('#export-excel-button').hide();
                     $('#export-pdf-button').hide();
                 }
-            }).fail(function (error) {
-                console.log('There is a problem fetching on over-remittances. Please try again later.');
             }
-        );
+        });
+
+
     },
     form.getYearsAndMonths = function (year) {
         $.get(`${baseUrl}beneficiary/getyearsandmonths`)
