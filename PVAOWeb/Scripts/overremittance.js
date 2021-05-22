@@ -1,6 +1,8 @@
 ﻿var OverRemittance = function () {
     var form = this;
     var baseUrl = JSON.parse(localStorage.getItem("api")).baseUrl;
+    var container = $('#pagination-overremittance');
+    var totalcount, pagesize;
 
     form._construct = function () {
         var url = window.location.href;
@@ -109,8 +111,6 @@
         if (year !== '-- Year --' && month === '-- Month --')
             endpointUrl = `${baseUrl}beneficiary/getoverremittances?searchValue=${searchValue}&year=${year}`;
 
-        var container = $('#pagination-overremittance');
-        var totalcount, pagesize;
         container.pagination({
             dataSource: endpointUrl,
             locator: 'overRemittances',
