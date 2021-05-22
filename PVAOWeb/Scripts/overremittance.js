@@ -1,8 +1,7 @@
 ﻿var OverRemittance = function () {
     var form = this;
     var baseUrl = JSON.parse(localStorage.getItem("api")).baseUrl;
-    var container = $('#pagination-overremittance');
-    var totalcount, pagesize;
+    var container, totalcount, pagesize;
 
     form._construct = function () {
         var url = window.location.href;
@@ -12,12 +11,12 @@
         if (url.split('/')[4] !== "List") {
             var id = url.split('/')[5];
 
-            form.getOverRemittanceById(id);
+            //form.getOverRemittanceById(id);
+            container = $('#pagination-overremittance-forapproval');
         } else {
+            container = $('#pagination-overremittance');
             form.getBenefitStatuses();
-
             form.getYearsAndMonths('');
-
             form.getOverRemittances($('#search-overremittance-text').val(), '', '');
         }
     },
