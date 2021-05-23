@@ -86,14 +86,14 @@
         );
     },
     form.getOverRemittances = function (searchValue, year, month) {
-        var endpointUrl = `${baseUrl}beneficiary/getoverremittances?searchValue=${searchValue}&currentPage=1&pageSize=10`;
+        var endpointUrl = `${baseUrl}/beneficiary/getoverremittances?searchValue=${searchValue}&currentPage=1&pageSize=10`;
 
         if (year !== '-- Year --' && month !== '-- Month --')
-            endpointUrl = `${baseUrl}beneficiary/getoverremittances?searchValue=${searchValue}&year=${year}&month=${month}&currentPage=1&pageSize=10`;
+            endpointUrl = `${baseUrl}/beneficiary/getoverremittances?searchValue=${searchValue}&year=${year}&month=${month}&currentPage=1&pageSize=10`;
         
 
         if (year !== '-- Year --' && month === '-- Month --')
-            endpointUrl = `${baseUrl}beneficiary/getoverremittances?searchValue=${searchValue}&year=${year}&currentPage=1&pageSize=10`;
+            endpointUrl = `${baseUrl}/beneficiary/getoverremittances?searchValue=${searchValue}&year=${year}&currentPage=1&pageSize=10`;
 
         $.get(endpointUrl)
             .done(function (data) {
@@ -155,7 +155,7 @@
         );
     },
     form.getYearsAndMonths = function (year) {
-        $.get(`${baseUrl}beneficiary/getyearsandmonths`)
+        $.get(`${baseUrl}/beneficiary/getyearsandmonths`)
             .done(function (data) {
                 if (year !== '') {
                     var dates = data.months;
@@ -209,7 +209,7 @@
         );
     }
     form.getOverRemittanceById = function (id) {
-        $.get(`${baseUrl}beneficiary/getoverremittancebyid?claimNumber=${id}`)
+        $.get(`${baseUrl}/beneficiary/getoverremittancebyid?claimNumber=${id}`)
             .done(function (data) {
                 var overRemittance = data.overRemittance;
 

@@ -1,5 +1,6 @@
 var Dashboard = function () {
     var form = this;
+    var baseUrl = JSON.parse(localStorage.getItem("api")).baseUrl;
 
     form._construct = function () {
         form.getTotalVeterans();
@@ -7,7 +8,7 @@ var Dashboard = function () {
         form.getTotalBeneficiaries();
     },
     form.getTotalVeterans = function () {
-        $.get(`${window.webApiUrl}dashboard/gettotalveterans`)
+        $.get(`${baseUrl}dashboard/gettotalveterans`)
             .done(function (data) {
                 $('#total-veterans').text(data);
             }).fail(function (error) {
@@ -16,7 +17,7 @@ var Dashboard = function () {
         );
     },
     form.getTotalBeneficiaries = function () {
-        $.get(`${window.webApiUrl}dashboard/gettotalbeneficiaries`)
+        $.get(`${baseUrl}dashboard/gettotalbeneficiaries`)
             .done(function (data) {
                 $('#total-beneficiaries').text(data);
             }).fail(function (error) {
