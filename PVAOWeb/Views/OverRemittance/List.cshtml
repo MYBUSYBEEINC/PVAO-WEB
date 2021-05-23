@@ -21,25 +21,31 @@
                 <input id="search-overremittance-text" type="text" placeholder="Search over-remittances here...">
             </div>
         </form>
-        <div class="col-md-12">
-            <table id="overremittance-table" class="table table-hover"></table>
-
-            <center id="no-available-overremittances">
-                <p class="font-italic">
-                    <i class="fa fa-exclamation-triangle error-icon" aria-hidden="true"></i> No over-remittances listed yet.
-                </p>
-            </center>
-
-            <div class="row">
-                <div class="col-md-7"></div>
-                <div class="col-md-5">
-                    <button id="export-excel-button" type="button" class="btn btn-success"><i class="far fa-file-excel"></i> Export to Excel</button>
-                    <button id="export-pdf-button" type="button" class="btn btn-danger"><i class="far fa-file-pdf"></i> Export to PDF</button>
+        <div id="wrapper" class="col-md-12">
+            <section>
+                <div class="data-container">
+                    <table id="overremittance-table" class="table table-hover"></table>
+                    <center id="no-available-overremittances">
+                        <p class="font-italic">
+                            <i class="fa fa-exclamation-triangle error-icon" aria-hidden="true"></i> No over-remittances listed yet.
+                        </p>
+                    </center>
                 </div>
-            </div>
-
-            <br /><br />
-
+                <div class="row">
+                    <div class="col-md-10"></div>
+                    <div class="col-md-2">
+                        <div id="pagination-overremittance"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-7"></div>
+                    <div class="col-md-5">
+                        <button id="export-excel-button" type="button" class="btn btn-success"><i class="far fa-file-excel"></i> Export to Excel</button>
+                        <button id="export-pdf-button" type="button" class="btn btn-danger"><i class="far fa-file-pdf"></i> Export to PDF</button>
+                    </div>
+                </div>
+                <br /><br />
+            </section>
             <!--<div class="row">
         <div class="col-md-6">
             <p class="showing-entries">Showing 1 to 10 of 25 entries.</p>
@@ -71,6 +77,8 @@
         </div>
     </div>
 </div>
-
+@Scripts.Render("~/Scripts/layout")
 @Scripts.Render("~/Scripts/overremittance")
 @Scripts.Render("~/Scripts/api")
+@Scripts.Render("~/Scripts/excelhelper")
+@Scripts.Render("~/Scripts/pdfhelper")

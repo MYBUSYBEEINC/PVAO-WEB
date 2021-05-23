@@ -38,7 +38,7 @@
             </div>
             <div class="col-xl-3 col-md-6 col-12">
                 <div class="statistic__item item--green">
-                    <h2 class="counter-value">0</h2>
+                    <h2 class="counter-value"><span id="total-overremittances"></span></h2>
                     <span class="desc">Over Remittance</span>
                     <div class="icon">
                         <img src="/Content/images/dashboard/bar-chart.png" alt="Over Remittance">
@@ -55,4 +55,5 @@
     </div>
 </div>
 
+@Scripts.Render("~/Scripts/api")
 @Scripts.Render("~/Scripts/dashboard")

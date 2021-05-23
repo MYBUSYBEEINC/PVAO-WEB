@@ -4,8 +4,8 @@ var Dashboard = function () {
 
     form._construct = function () {
         form.getTotalVeterans();
-
         form.getTotalBeneficiaries();
+        form.getTotalOverremittances();
     },
     form.getTotalVeterans = function () {
         $.get(`${baseUrl}dashboard/gettotalveterans`)
@@ -24,6 +24,15 @@ var Dashboard = function () {
                 console.log('There is a problem fetching on total beneficiaries count. Please try again later.');
             }
         );
+    },
+    form.getTotalOverremittances = function () {
+        $.get(`${baseUrl}dashboard/gettotaloverremittances`)
+            .done(function (data) {
+                $('#total-overremittances').text(data);
+            }).fail(function (error) {
+                    console.log('There is a problem fetching on total beneficiaries count. Please try again later.');
+                }
+            );
     }
 }
 
