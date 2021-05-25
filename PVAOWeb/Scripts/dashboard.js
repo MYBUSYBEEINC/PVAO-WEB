@@ -8,7 +8,7 @@ var Dashboard = function () {
         form.getTotalOverremittances();
     },
     form.getTotalVeterans = function () {
-        $.get(`${baseUrl}dashboard/gettotalveterans`)
+        $.get(`${baseUrl}/dashboard/gettotalveterans`)
             .done(function (data) {
                 $('#total-veterans').text(data);
             }).fail(function (error) {
@@ -17,7 +17,7 @@ var Dashboard = function () {
         );
     },
     form.getTotalBeneficiaries = function () {
-        $.get(`${baseUrl}dashboard/gettotalbeneficiaries`)
+        $.get(`${baseUrl}/dashboard/gettotalbeneficiaries`)
             .done(function (data) {
                 $('#total-beneficiaries').text(data);
             }).fail(function (error) {
@@ -26,7 +26,7 @@ var Dashboard = function () {
         );
     },
     form.getTotalOverremittances = function () {
-        $.get(`${baseUrl}dashboard/gettotaloverremittances`)
+        $.get(`${baseUrl}/dashboard/gettotaloverremittances`)
             .done(function (data) {
                 $('#total-overremittances').text(data);
             }).fail(function (error) {

@@ -17,7 +17,7 @@
             container = $('#pagination-overremittance');
             form.getBenefitStatuses();
             form.getYearsAndMonths('');
-            form.getOverRemittances($('#search-overremittance-text').val(), '', '');
+            form.getOverRemittances(1, $('#search-overremittance-text').val(), '', '');
         }
     },
     form._events = function () {
@@ -25,21 +25,16 @@
             e.preventDefault();
 
             var year = $(this).attr('data-description');
-            var searchText = $('#search-overremittance-text').val();
 
             form.getYearsAndMonths(year);
 
-            form.getOverRemittances(searchText, year, '');
+            form.getOverRemittances(1, $('#search-overremittance-text').val(), year, '');
         });
 
         $(document).on("click", "#over-remittance-list .di-month", function (e) {
             e.preventDefault();
 
-            var year = $('#yr-dropdown-action').text();
-            var month = $(this).attr('data-description');
-            var searchText = $('#search-overremittance-text').val();
-
-            form.getOverRemittances(searchText, year, month);
+            form.getOverRemittances(1, $('#search-overremittance-text').val(), $('#yr-dropdown-action').text(), $(this).attr('data-description'));
         });
 
         $(document).on("click", "#export-excel-button", function (e) {
@@ -68,18 +63,29 @@
             if (e.which == 13) {
                 e.preventDefault();
 
-                if (e.target.id === 'search-overremittance-text') {
-                    var year = $('#yr-dropdown-action').text();
-                    var month = $('#mt-dropdown-action').text();
-                    var searchText = $('#search-overremittance-text').val();
+                if (e.target.id === 'search-overremittance-text')
+                    form.getOverRemittances(1, $('#search-overremittance-text').val(), $('#yr-dropdown-action').text(), $('#mt-dropdown-action').text());
+            }
+        });
 
-                    form.getOverRemittances(searchText, year, month);
-                }
+        $(document).on('click', '#page-wrapper .overremittance-pagination ul > li', function (e) {
+            e.preventDefault();
+
+            var currentActivePage = $("#page-wrapper .overremittance-pagination ul .active").text();
+            var currentPage = parseInt(currentActivePage) + 1;
+
+            if (e.target.className.split(' ')[1] !== 'disabled') {
+                if (e.target.innerText === 'Previous' || e.target.innerText === 'Next')
+                    currentPage = (e.target.innerText !== 'Previous') ? parseInt(currentActivePage) + 1 : parseInt(currentActivePage) - 1;
+                else
+                    currentPage = parseInt(e.target.innerText);
+
+                form.getOverRemittances(currentPage, $('#search-overremittance-text').val(), $('#yr-dropdown-action').text(), $('#mt-dropdown-action').text());
             }
         });
     },
     form.getBenefitStatuses = function () {
-        $.get(`${baseUrl}beneficiary/getbenefitstatus`)
+        $.get(`${baseUrl}/beneficiary/getbenefitstatus`)
             .done(function (data) {
                 var benefitStatus = data.filter(function (item) { return item.prefix == "DW" || item.prefix == "DC" || item.prefix == "TP"; });
 
@@ -101,58 +107,88 @@
             }
         );
     },
-    form.getOverRemittances = function (searchValue, year, month) {
-        var endpointUrl = `${baseUrl}/beneficiary/getoverremittances?searchValue=${searchValue}&currentPage=1&pageSize=10`;
+    form.getOverRemittances = function (currentPage, searchValue, year, month) {
+        var endpointUrl = `${baseUrl}/beneficiary/getoverremittances?searchValue=${searchValue}&currentPage=${currentPage}&pageSize=2`;
+
+        console.log(month);
 
         if (year !== '-- Year --' && month !== '-- Month --')
-            endpointUrl = `${baseUrl}/beneficiary/getoverremittances?searchValue=${searchValue}&year=${year}&month=${month}&currentPage=1&pageSize=10`;
+            endpointUrl = `${baseUrl}/beneficiary/getoverremittances?searchValue=${searchValue}&year=${year}&month=${month}&currentPage=${currentPage}&pageSize=2`;
         
         
         if (year !== '-- Year --' && month === '-- Month --')
-            endpointUrl = `${baseUrl}/beneficiary/getoverremittances?searchValue=${searchValue}&year=${year}&currentPage=1&pageSize=10`;
+            endpointUrl = `${baseUrl}/beneficiary/getoverremittances?searchValue=${searchValue}&year=${year}&currentPage=${currentPage}&pageSize=2`;
 
         $.get(endpointUrl)
             .done(function (data) {
                 var overRemittances = data.overRemittances;
-                
+                var totalCount = data.totalItems;
+
                 var htmlContent = '<thead class="thead-dark">';
-                htmlContent += '<tr>';
-                htmlContent += '<th scope="col">Claim Number</th>';
-                htmlContent += '<th scope="col">Description</th>';
-                htmlContent += '<th scope="col">VDMS Number</th>';
-                htmlContent += '<th scope="col">Beneficiary Name</th>';
-                htmlContent += '<th scope="col">Relation</th>';
-                htmlContent += '<th scope="col">Gender</th>';
-                htmlContent += '<th scope="col">Amount</th>';
-                htmlContent += '<th scope="col">Date Approved</th>';
-                htmlContent += '<th scope="col" class="text-center">Status</th>';
-                htmlContent += '<th scope="col" class="text-center">Action</th>';
-                htmlContent += '</tr>';
+                    htmlContent += '<tr>';
+                        htmlContent += '<th scope="col">Claim Number</th>';
+                        htmlContent += '<th scope="col">Description</th>';
+                        htmlContent += '<th scope="col">VDMS Number</th>';
+                        htmlContent += '<th scope="col">Beneficiary Name</th>';
+                        htmlContent += '<th scope="col">Relation</th>';
+                        htmlContent += '<th scope="col">Gender</th>';
+                        htmlContent += '<th scope="col">Amount</th>';
+                        htmlContent += '<th scope="col">Date Approved</th>';
+                        htmlContent += '<th scope="col" class="text-center">Status</th>';
+                        htmlContent += '<th scope="col" class="text-center">Action</th>';
+                    htmlContent += '</tr>';
                 htmlContent += '</thead>';
                 htmlContent += '<tbody>';
 
                 for (var x = 0; x < overRemittances.length; x++) {
                     htmlContent += '<tr>';
-                    htmlContent += `<td>${overRemittances[x].claimNumber}</td>`;
-                    htmlContent += `<td>${overRemittances[x].benefitCode}</td>`;
-                    htmlContent += `<td>${overRemittances[x].vdmsNumber}</td>`;
-                    htmlContent += `<td>${overRemittances[x].beneficiaryName}</td>`;
-                    htmlContent += `<td>${overRemittances[x].relation}</td>`;
-                    htmlContent += `<td>${overRemittances[x].gender}</td>`;
-                    htmlContent += `<td>${overRemittances[x].amount}</td>`;
-                    htmlContent += `<td>${new Date(overRemittances[x].dateApproved).toLocaleDateString()}</td>`;
-                    htmlContent += `<td class="text-center"><span class="badge badge-warning">${overRemittances[x].status}</span></td>`;
-                    htmlContent += '<td class="text-center">';
-                    htmlContent += `<button id="or-${overRemittances[x].claimNumber}" data-id="${overRemittances[x].claimNumber}" type="button" data class="btn btn-primary view-btn"><i class="far fa-eye"></i> View</button></td >`;
-                    htmlContent += '</td>';
+                        htmlContent += `<td>${overRemittances[x].claimNumber}</td>`;
+                        htmlContent += `<td>${overRemittances[x].benefitCode}</td>`;
+                        htmlContent += `<td>${overRemittances[x].vdmsNumber}</td>`;
+                        htmlContent += `<td>${overRemittances[x].beneficiaryName}</td>`;
+                        htmlContent += `<td>${overRemittances[x].relation}</td>`;
+                        htmlContent += `<td>${overRemittances[x].gender}</td>`;
+                        htmlContent += `<td>${overRemittances[x].amount}</td>`;
+                        htmlContent += `<td>${new Date(overRemittances[x].dateApproved).toLocaleDateString()}</td>`;
+                        htmlContent += `<td class="text-center"><span class="badge badge-warning">${overRemittances[x].status}</span></td>`;
+                        htmlContent += '<td class="text-center">';
+                            htmlContent += `<button id="or-${overRemittances[x].claimNumber}" data-id="${overRemittances[x].claimNumber}" type="button" data class="btn btn-primary view-btn"><i class="far fa-eye"></i> View</button></td >`;
+                        htmlContent += '</td>';
                     htmlContent += '</tr>';
                 }
 
                 htmlContent += '</tbody>';
 
-                $('#over-remittance-list .header-text').text(`Over-remittance List (${totalcount})`);
+                $('#over-remittance-list .header-text').text(`Over-remittance List (${totalCount})`);
 
                 $('#over-remittance-list .table').html(htmlContent);
+
+                if (data.pageCount > 1) {
+                    var paginationHtml = '<nav aria-label="...">';
+                        paginationHtml += '<ul class="pagination">';
+
+                            paginationHtml += `<li class="page-item ${currentPage !== 1 ? '' : 'disabled'} ">`;
+                                paginationHtml += '<span class="page-link">Previous</span>';
+                            paginationHtml += '</li>';
+
+                            for (var i = 1; i <= data.pageCount; i++) {
+                                paginationHtml += `<li class="page-item ${currentPage !== i ? '' : 'active'}">`;
+                                    paginationHtml += `<a class="page-link" href="#">${i}</a>`;
+                                paginationHtml += '</li>';
+                            }
+                        
+                            paginationHtml += `<li class="page-item ${currentPage !== data.pageCount ? '' : 'disabled'}">`;
+                                paginationHtml += '<a class="page-link" href="#">Next</a>';
+                            paginationHtml += '</li>';
+                        paginationHtml += '</ul>';
+                    paginationHtml += '</nav>';
+
+                    $('#page-wrapper .overremittance-pagination').html(paginationHtml);
+
+                    $('#page-wrapper .overremittance-pagination').show();
+                } else {
+                    $('#page-wrapper .overremittance-pagination').hide();
+                }
 
                 if (overRemittances.length != 0) {
                     $('#no-available-overremittances').hide();
@@ -165,10 +201,9 @@
                     $('#export-excel-button').hide();
                     $('#export-pdf-button').hide();
                 }
-            }
-        });
-
-
+            }).fail(function (error) {
+                console.log('There is a problem fetching on over-remittance list. Please try again later.');
+            });
     },
     form.getYearsAndMonths = function (year) {
         $.get(`${baseUrl}/beneficiary/getyearsandmonths`)
