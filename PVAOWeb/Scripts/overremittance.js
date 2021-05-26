@@ -10,8 +10,6 @@
 
         if (url.split('/')[4] !== "List") {
             var id = url.split('/')[5];
-
-            //form.getOverRemittanceById(id);
             container = $('#pagination-overremittance-forapproval');
         } else {
             container = $('#pagination-overremittance');
@@ -23,22 +21,24 @@
     form._events = function () {
         $(document).on("click", "#over-remittance-list .di-year", function (e) {
             e.preventDefault();
-
             var year = $(this).attr('data-description');
-
             form.getYearsAndMonths(year);
-
             form.getOverRemittances(1, $('#search-overremittance-text').val(), year, '');
         });
 
         $(document).on("click", "#over-remittance-list .di-month", function (e) {
             e.preventDefault();
-
             form.getOverRemittances(1, $('#search-overremittance-text').val(), $('#yr-dropdown-action').text(), $(this).attr('data-description'));
         });
 
         $(document).on("click", "#export-excel-button", function (e) {
-            excelHelper.exportToExcel('overremittance-table', 'overremittancetable');
+            var exportDone = [].concat.apply([], [
+                excelHelper.exportToExcel('overremittance-table', 'overremittancetable')
+            ]);
+
+            $.when.apply($, exportDone).then(function () {
+                window.location.reload();
+            });
         });
 
         $(document).on("click", "#export-excel-forapproval-button", function (e) {
@@ -109,7 +109,6 @@
     },
     form.getOverRemittances = function (currentPage, searchValue, year, month) {
         var endpointUrl = `${baseUrl}/beneficiary/getoverremittances?searchValue=${searchValue}&currentPage=${currentPage}&pageSize=2`;
-
         console.log(month);
 
         if (year !== '-- Year --' && month !== '-- Month --')
