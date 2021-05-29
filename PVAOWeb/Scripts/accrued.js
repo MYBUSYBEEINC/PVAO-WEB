@@ -1,12 +1,13 @@
 ﻿var Accrued = function () {
     var form = this;
+    var baseUrl = JSON.parse(localStorage.getItem("api")).baseUrl;
 
     form._construct = function () {
-
+        var url = window.location.href;
     },
     form._events = function () {
     }
 }
 
-var myClass = new Accrued();
-myClass._construct();
+var accrued = new Accrued();
+accrued._construct();
