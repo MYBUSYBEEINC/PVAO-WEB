@@ -28,5 +28,10 @@ namespace PVAOWeb.Controllers
         {
             return View();
         }
+
+        public ActionResult Details()
+        {
+            return View();
+        }
     }
 }
