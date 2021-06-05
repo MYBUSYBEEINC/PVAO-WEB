@@ -24,7 +24,7 @@ namespace PVAOWeb.Controllers
             return View();
         }
 
-        public ActionResult CreateSOD()
+        public ActionResult SOD()
         {
             return View();
         }

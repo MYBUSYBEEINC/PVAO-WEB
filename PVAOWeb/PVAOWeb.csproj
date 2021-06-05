@@ -1999,6 +1999,7 @@
     <Content Include="Scripts\api.js" />
     <Content Include="Scripts\chart.js" />
     <Content Include="Scripts\configuration.js" />
+    <Content Include="Scripts\sod.js" />
     <Content Include="Scripts\dashboard-page.js" />
     <Content Include="Scripts\dashboard.js" />
     <Content Include="Scripts\excelhelper.js" />
@@ -2154,10 +2155,12 @@
     <Content Include="Views\Accrued\Index.cshtml" />
     <Content Include="Views\Accrued\List.cshtml" />
     <Content Include="Views\Accrued\ForApproval.cshtml" />
-    <Content Include="Views\Accrued\CreateSOD.cshtml" />
+    <Content Include="Views\Accrued\SOD.cshtml" />
     <Content Include="Views\OverRemittance\Details.cshtml" />
     <Content Include="Views\Shared\_Layout2.cshtml" />
     <Content Include="Views\Accrued\Details.cshtml" />
+    <Content Include="Views\Accrued\CertificateOfUncollectedPension.cshtml" />
+    <Content Include="Views\Accrued\DisbursementVouchers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
